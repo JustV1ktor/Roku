@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="MainScene" extends="Scene">
+    <script type="text/brightscript" uri="MainScene.brs" initialFocus="buttonCount"/>
+    <children>
+        <LayoutGroup>
+            <Label
+                id = "labelText"
+                text = "count x"
+                width = "200" 
+                height = "200"
+            />
+            <Button
+                id = "buttonCount"
+                text = "button"
+                focusedTextColor = "0X000000FF"
+                showFocusFootprint = "true"
+                minWidth = "200"
+                height = "200"
+            />
+        </LayoutGroup>
+    </children>
+</component>
