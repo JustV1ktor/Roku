@@ -1,5 +1,6 @@
-<component name="SlideShow" extends="Group">
-    <script type="text/brightscript" uri="SlideShow.brs"/>
+<component name="SlideShowView" extends="Group">
+    <script type="text/brightscript" uri="SlideShowView.brs"/>
+    <script type="text/brightscript" uri="pkg:/components/RawData/RawData.brs"/>
     <children>
         <LayoutGroup
             id = "layoutGroup"
@@ -15,57 +16,40 @@
                 id = "elementTop"
                 layoutDirection = "horiz">
                 <Poster
-                id = "posterPhoto"
-                uri = "https://cdn.prod.website-files.com/5c6e81f1e965e241a716e966/62e146c34dc6c09ece83d45a_mini%20squares.jpg"
-                />
+                id = "posterPhoto"/>
                 <LayoutGroup
-                    id = "buttonsGroup"
-                >
+                    id = "buttonsGroup">
                     <Button
                         id = "buttonPrevious"
                         text = "Previous"
-                        focusedTextColor = "0X000000FF"
-                    />
+                        focusedTextColor = "0X000000FF"/>
                     <Button
                         id = "buttonNext"
                         text = "Next"
-                        focusedTextColor = "0X000000FF"
-                    />
+                        focusedTextColor = "0X000000FF"/>
                     <Button
                         id = "buttonSlideShow"
                         text = "Slide Show"
-                        focusedTextColor = "0X000000FF"
-                    />
+                        focusedTextColor = "0X000000FF"/>
                 </LayoutGroup>
             </LayoutGroup>
 
             <LayoutGroup
                 id = "elementBottom"
                 layoutDirection = "horiz"
-                itemSpacings = "[10]"
-            >
+                itemSpacings = "[10]">
                 <Rectangle
                     id = "RectangleOne"
-                    color = "0x000000FF"
-                />
+                    color = "0x000000FF"/>
                 <Rectangle
                     id = "RectangleTwo"
-                    color = "0x880000FF"
-                    width = "470"
-                    height = "530"
-                />
+                    color = "0x880000FF"/>
                 <Rectangle
                     id = "RectangleThree"
-                    color = "0x888B00FF"
-                    width = "470"
-                    height = "530"
-                />
+                    color = "0x888B00FF"/>
                 <Rectangle
                     id = "RectangleFour"
-                    color = "0x0000821D"
-                    width = "470"
-                    height = "530"
-                />
+                    color = "0x0000821D"/>
             </LayoutGroup>
         </LayoutGroup>
     </children>

@@ -3,13 +3,11 @@ sub init()
     m.buttonNext = m.top.findNode("buttonNext")
     m.buttonSlideShow = m.top.findNode("buttonSlideShow")
 
-    m.buttonPrevious.observeField("buttonSelected", "previousPhoto")
-    m.buttonNext.observeField("buttonSelected", "nextPhoto")
-    m.buttonSlideShow.observeField("buttonSelected", "slideShow")
+    m.buttonPrevious.observeField("buttonSelected", "onPreviousButtonSelected")
+    m.buttonNext.observeField("buttonSelected", "onNextButtonSelected")
+    m.buttonSlideShow.observeField("buttonSelected", "onSlideShowButtonSelected")
 
     m.poster = m.top.findNode("posterPhoto")
-
-    layoutGroup = m.top.findNode("layoutGroup")
 
     m.rectangleOne = m.top.findNode("RectangleOne")
     m.rectangleTwo = m.top.findNode("RectangleTwo")
@@ -17,31 +15,41 @@ sub init()
     m.rectangleFour = m.top.findNode("RectangleFour")
 
     m.timer = m.top.findNode("timer")
-    m.timer.observeField("fire", "photoChanges")
+    m.timer.observeField("fire", "onFirePhotoChanges")
     
-    m.poster.width = (1920 / 2) - 10
-    m.poster.height = (1080 / 2) - 10
+    m.poster.setField("width", (1920 / 2) - 10)
+    m.poster.setField("height", (1080 / 2) - 10)
 
-    m.rectangleOne.width = (1920 - (10 * 4)) / 4
-    m.rectangleOne.height = (1080 - (10 * 2)) / 2
+    rectangleWidth = (1920 - (10 * 4)) / 4
+    rectangleheight = (1080 - (10 * 2)) / 2
+
+    m.rectangleOne.setField("width", rectangleWidth)
+    m.rectangleTwo.setField("width", rectangleWidth)
+    m.rectangleThree.setField("width", rectangleWidth)
+    m.rectangleFour.setField("width", rectangleWidth)
+
+    m.rectangleOne.setField("height", rectangleheight)
+    m.rectangleTwo.setField("height", rectangleheight)
+    m.rectangleThree.setField("height", rectangleheight)
+    m.rectangleFour.setField("height", rectangleheight)
 
     buttonHeight = ((1080 / 2) - 10) / 3
     buttonWidth = (1920 / 2) - 10
 
-    m.buttonNext.height = buttonHeight
-    m.buttonPrevious.height = buttonHeight
-    m.buttonSlideShow.height = buttonHeight
+    m.buttonNext.setField("height", buttonHeight)
+    m.buttonPrevious.setField("height", buttonHeight)
+    m.buttonSlideShow.setField("height", buttonHeight)
+    
+    m.buttonNext.setField("minWidth", buttonWidth)
+    m.buttonPrevious.setField("minWidth", buttonWidth)
+    m.buttonSlideShow.setField("minWidth", buttonWidth)
 
-    m.buttonNext.minWidth = buttonWidth
-    m.buttonPrevious.minWidth = buttonWidth
-    m.buttonSlideShow.minWidth = buttonWidth
+    m.photoArray = rawPhoto()
+    m.colorsArray = rawColors()
+
+    m.poster.setField("uri", m.photoArray[0])
 
     m.buttons = [m.buttonSlideShow, m.buttonNext, m.buttonPrevious]
-    m.photoArray = ["https://cdn.prod.website-files.com/5c6e81f1e965e241a716e966/62e146c34dc6c09ece83d45a_mini%20squares.jpg", 
-                    "https://cdn.prod.website-files.com/5c6e81f1e965e241a716e966/60643a544c49f8681ee33326_Mini%20Prints%205x5cm.jpg", 
-                    "https://inkifi.com/media/wysiwyg/small-photo-prints-3.jpg", 
-                    "https://www.images.photojaanic.com/in/2022/productpage/prints/mini-prints/mini-prints01.jpg"]
-    m.colorsArray = ["0x000088FF", "0x888888FF", "0x000000FF", "0x880000FF", "0x880088FF", "0x0000821D", "0x888B00FF", "0x000888FF", "0x888800FF", "0x008888FF"]
     m.rectangles = [m.rectangleOne, m.rectangleTwo, m.rectangleThree, m.rectangleFour]
 
     m.time = 0
@@ -49,37 +57,37 @@ sub init()
     m.currentPhoto = 0
 end sub
 
-sub previousPhoto()
+sub onPreviousButtonSelected()
     m.timer.control = "stop"
     m.currentPhoto = m.currentPhoto - 1
     if m.currentPhoto = -1
-        m.currentPhoto = 3
+        m.currentPhoto = m.photoArray.Count() - 1
     end if
     m.poster.uri = m.photoArray[m.currentPhoto]
 end sub
 
-sub nextPhoto()
+sub onNextButtonSelected()
     m.timer.control = "stop"
     m.currentPhoto = m.currentPhoto + 1
-    if m.currentPhoto = 4
+    if m.currentPhoto >= m.photoArray.Count()
         m.currentPhoto = 0
     end if
     m.poster.uri = m.photoArray[m.currentPhoto]
 end sub
 
-sub slideShow()
+sub onSlideShowButtonSelected()
     m.timer.control = "start"
 end sub
 
-sub photoChanges()
+sub onFirePhotoChanges()
     m.currentPhoto = m.currentPhoto + 1
-    if m.currentPhoto = 4
+    if m.currentPhoto = m.photoArray.Count()
         m.currentPhoto = 0
     end if
     m.poster.uri = m.photoArray[m.currentPhoto]
     for each rectangle in m.rectangles
-        random = Rnd(10)
-        if random = 10
+        random = Rnd(m.colorsArray.Count())
+        if random = m.colorsArray.Count()
             random = 0
         end if
         rectangle.color = m.colorsArray[random]

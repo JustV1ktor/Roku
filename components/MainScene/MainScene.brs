@@ -1,7 +1,7 @@
 sub init()
     m.top.backgroundColor = "0x662D91"
-    SlideShow = CreateObject("roSGNode", "SlideShow")
-    m.top.appendChild(SlideShow)
+    slideShowView = CreateObject("roSGNode", "SlideShowView")
+    m.top.appendChild(slideShowView)
 
-    SlideShow.setFocus(true)
+    slideShowView.setFocus(true)
 end sub
