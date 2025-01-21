@@ -6,5 +6,5 @@ function rawPhoto() as dynamic
 end function
 
 function rawColors() as dynamic
-    return ["0x000088FF", "0x888888FF", "0x000000FF", "0x880000FF", "0x880088FF", "0x0000821D", "0x888B00FF", "0x000888FF", "0x888800FF", "0x008888FF"]
+    return ["0x000088FF", "0x888888FF", "0x000000FF", "0x880000FF", "0x880088FF", "0x0000821D", "0x888B00FF", "0x000888FF", "0x1177BB", "0x008888FF"]
 end function

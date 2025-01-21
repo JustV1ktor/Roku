@@ -1,4 +1,21 @@
 sub init()
+    findAndObserveNodes()
+    setElementsTranslation()
+
+    m.photoArray = rawPhoto()
+    m.colorsArray = rawColors()
+
+    m.poster.setField("uri", m.photoArray[0])
+
+    m.buttons = [m.buttonSlideShow, m.buttonNext, m.buttonPrevious]
+    m.rectangles = [m.rectangleOne, m.rectangleTwo, m.rectangleThree, m.rectangleFour]
+
+    m.time = 0
+    m.currentButton = 2
+    m.currentPhoto = 0
+end sub
+
+sub findAndObserveNodes()
     m.buttonPrevious = m.top.findNode("buttonPrevious")
     m.buttonNext = m.top.findNode("buttonNext")
     m.buttonSlideShow = m.top.findNode("buttonSlideShow")
@@ -16,45 +33,50 @@ sub init()
 
     m.timer = m.top.findNode("timer")
     m.timer.observeField("fire", "onFirePhotoChanges")
-    
-    m.poster.setField("width", (1920 / 2) - 10)
-    m.poster.setField("height", (1080 / 2) - 10)
+end sub
+
+sub setElementsTranslation()
+    m.poster.update({
+        width:  (1920 / 2) - 10,
+        height: (1080 / 2) - 10
+    }, true)
 
     rectangleWidth = (1920 - (10 * 4)) / 4
     rectangleheight = (1080 - (10 * 2)) / 2
 
-    m.rectangleOne.setField("width", rectangleWidth)
-    m.rectangleTwo.setField("width", rectangleWidth)
-    m.rectangleThree.setField("width", rectangleWidth)
-    m.rectangleFour.setField("width", rectangleWidth)
-
-    m.rectangleOne.setField("height", rectangleheight)
-    m.rectangleTwo.setField("height", rectangleheight)
-    m.rectangleThree.setField("height", rectangleheight)
-    m.rectangleFour.setField("height", rectangleheight)
+    m.rectangleOne.update({
+        width: rectangleWidth,
+        height: rectangleheight
+    }, true)
+    m.rectangleTwo.update({
+        width: rectangleWidth,
+        height: rectangleheight
+    }, true)
+    m.rectangleThree.update({
+        width: rectangleWidth,
+        height: rectangleheight
+    }, true)
+    m.rectangleFour.update({
+        width: rectangleWidth,
+        height: rectangleheight
+    }, true)
+    
 
     buttonHeight = ((1080 / 2) - 10) / 3
     buttonWidth = (1920 / 2) - 10
 
-    m.buttonNext.setField("height", buttonHeight)
-    m.buttonPrevious.setField("height", buttonHeight)
-    m.buttonSlideShow.setField("height", buttonHeight)
-    
-    m.buttonNext.setField("minWidth", buttonWidth)
-    m.buttonPrevious.setField("minWidth", buttonWidth)
-    m.buttonSlideShow.setField("minWidth", buttonWidth)
-
-    m.photoArray = rawPhoto()
-    m.colorsArray = rawColors()
-
-    m.poster.setField("uri", m.photoArray[0])
-
-    m.buttons = [m.buttonSlideShow, m.buttonNext, m.buttonPrevious]
-    m.rectangles = [m.rectangleOne, m.rectangleTwo, m.rectangleThree, m.rectangleFour]
-
-    m.time = 0
-    m.currentButton = 2
-    m.currentPhoto = 0
+    m.buttonNext.update({
+        minWidth: buttonWidth,
+        height: buttonHeight
+    }, true)
+    m.buttonPrevious.update({
+        minWidth: buttonWidth,
+        height: buttonHeight
+    }, true)
+    m.buttonSlideShow.update({
+        minWidth: buttonWidth,
+        height: buttonHeight
+    }, true)
 end sub
 
 sub onPreviousButtonSelected()
