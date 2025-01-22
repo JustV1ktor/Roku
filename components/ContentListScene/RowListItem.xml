@@ -1,0 +1,15 @@
+<component name="RowListItem" extends = "Group">
+    <script type="text/brightscript" uri="RowListItem.brs"/>
+
+    <interface> 
+        <field id = "itemContent" type = "node" onChange = "showContent"/>
+    </interface>
+    
+    <children>
+        <Poster
+            id = "itemPoster"
+            loadDisplayMode = "limitSize"
+            loadWidth = "400"
+            loadHeight = "400"/>
+    </children>
+</component>

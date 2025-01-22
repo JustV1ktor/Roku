@@ -1,0 +1,39 @@
+<component name="ContentListScene" extends = "Group" initialFocus  = "rowList">
+    <script type="text/brightscript" uri="ContentListScene.brs"/>
+    <children>
+        <LayoutGroup
+            layoutDirection = "vert"
+            horizAlignment = "left"
+            vertAlignment = "top"
+            translation = "[10, 10]">
+            <LayoutGroup 
+                id = "topElments"
+                layoutDirection = "horiz">
+                    <Poster
+                    id = "photoPoster"/>
+                    <LayoutGroup
+                        layoutDirection = "vert">
+                        <Label
+                        id = "titleText"/>
+                        <Label
+                        id = "descriptionText"
+                        wrap = "true"/>
+                    </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup 
+                id = "bottomElments">
+                <RowList
+                    id = "rowList"
+                    itemComponentName = "RowListItem" 
+                    rowFocusAnimationStyle = "fixedFocusWrap"
+                    vertFocusAnimationStyle = "fixedFocusWrap"
+                    showRowLabel = "[ true ]"
+                    showRowCounter = "[ true ]"
+                    numRows = "3"
+                    itemSize = "[1880, 450]"
+                    rowItemSize = "[ [400, 400] ]">
+                </RowList>
+            </LayoutGroup>
+        </LayoutGroup>
+    </children>
+</component>
