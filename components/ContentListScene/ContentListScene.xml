@@ -8,13 +8,18 @@
             translation = "[10, 10]">
             <LayoutGroup 
                 id = "topElments"
-                layoutDirection = "horiz">
+                layoutDirection = "horiz"
+                itemSpacings = "[10]">
                     <Poster
                     id = "photoPoster"/>
                     <LayoutGroup
-                        layoutDirection = "vert">
+                        layoutDirection = "vert"
+                        itemSpacings = "[20]">
                         <Label
-                        id = "titleText"/>
+                        id = "titleText"
+                        maxLines = "2"
+                        wrap = "true"
+                        color = "0x1177BB"/>
                         <Label
                         id = "descriptionText"
                         wrap = "true"/>
@@ -26,12 +31,14 @@
                     id = "rowList"
                     itemComponentName = "RowListItem" 
                     rowFocusAnimationStyle = "fixedFocusWrap"
-                    vertFocusAnimationStyle = "fixedFocusWrap"
+                    vertFocusAnimationStyle = "fixedFocus"
                     showRowLabel = "[ true ]"
                     showRowCounter = "[ true ]"
+                    rowLabelOffset = "[ [0, 20] ]"
                     numRows = "3"
-                    itemSize = "[1880, 450]"
-                    rowItemSize = "[ [400, 400] ]">
+                    itemSize = "[1880, 470]"
+                    rowItemSize = "[ [400, 400] ]"
+                    rowItemSpacing = "[ [50, 0] ]">
                 </RowList>
             </LayoutGroup>
         </LayoutGroup>

@@ -16,7 +16,7 @@ sub findANdPopulate()
     m.title.text = firstElemnt.title
     m.description.text = firstElemnt.description
 
-    m.rowList.observeField("rowItemSelected", "checkAndPopulateElemnts")
+    m.rowList.observeField("rowItemFocused", "checkAndPopulateElemnts")
 end sub
 
 sub setElementsTranslation()
@@ -27,13 +27,12 @@ sub setElementsTranslation()
 
     m.title.update({
         width:  ((1920 / 2) - 10),
-        height: (((1080 / 2) - 10) / 3)
-    })
+    }, true)
 
     m.description.update({
         width:  ((1920 / 2) - 10),
-        height: (((1080 / 2) - 10) / 3) * 2
-    })
+        height: ((1080 / 2) - 10) - m.title.boundingRect().height
+    }, true)
 end sub
 
 sub checkAndPopulateElemnts(event)
