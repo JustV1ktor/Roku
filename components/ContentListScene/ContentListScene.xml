@@ -11,7 +11,8 @@
                 layoutDirection = "horiz"
                 itemSpacings = "[10]">
                     <Poster
-                    id = "photoPoster"/>
+                    id = "photoPoster"
+                    loadDisplayMode = "scaleToFit"/>
                     <LayoutGroup
                         layoutDirection = "vert"
                         itemSpacings = "[20]">
@@ -32,12 +33,13 @@
                     itemComponentName = "RowListItem" 
                     rowFocusAnimationStyle = "fixedFocusWrap"
                     vertFocusAnimationStyle = "fixedFocus"
+                    variableWidthItems = "[ true ]"
                     showRowLabel = "[ true ]"
                     showRowCounter = "[ true ]"
                     rowLabelOffset = "[ [0, 20] ]"
                     numRows = "3"
                     itemSize = "[1880, 470]"
-                    rowItemSize = "[ [400, 400] ]"
+                    rowItemSize = "[[400,400]]"
                     rowItemSpacing = "[ [50, 0] ]">
                 </RowList>
             </LayoutGroup>

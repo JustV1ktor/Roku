@@ -9,14 +9,26 @@ sub findANdPopulate()
     m.description = m.top.findNode("descriptionText")
     m.rowList = m.top.findNode("rowList")
 
-    m.rowList.content = CreateObject("roSGNode", "RowListContent")
 
-    firstElemnt = m.rowList.content.getChild(0).getChild(0)
-    m.poster.uri = firstElemnt.HDPosterUrl
-    m.title.text = firstElemnt.title
-    m.description.text = firstElemnt.description
+    content = CreateObject("roSGNode", "RowListContent")
+    for i = 0 to content.getChildCount() - 1
+        for j = 0 to content.getChild(i).getChildCount() -1
+            content.getChild(i).getChild(j).addField("FHDItemWidth", "float", false)
+            if j = 0 OR j = 2 OR j = 4
+                content.getChild(i).getChild(j).FHDItemWidth = "400"
+            else
+                content.getChild(i).getChild(j).FHDItemWidth = "704"
+            end if
+        end for
+    end for
+    m.rowList.content = content
 
-    m.rowList.observeField("rowItemFocused", "checkAndPopulateElemnts")
+    firstElement = m.rowList.content.getChild(0).getChild(0)
+    m.poster.uri = firstElement.HDPosterUrl
+    m.title.text = firstElement.title
+    m.description.text = firstElement.description
+
+    m.rowList.observeField("rowItemFocused", "checkAndPopulateElements")
 end sub
 
 sub setElementsTranslation()
@@ -35,10 +47,10 @@ sub setElementsTranslation()
     }, true)
 end sub
 
-sub checkAndPopulateElemnts(event)
+sub checkAndPopulateElements(event)
     indices = event.getData()
     itemContent = m.rowList.content.getChild(indices[0]).getChild(indices[1])
-    
+
     m.poster.update ({
         uri: itemContent.HDPosterUrl
     })

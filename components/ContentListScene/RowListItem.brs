@@ -2,6 +2,6 @@ sub init()
     m.poster = m.top.findNode("itemPoster") 
 end sub
 
-sub showContent()
-    m.poster.uri = m.top.itemContent.HDPosterUrl
+sub showContent(event as Object)
+    m.poster.uri = event.getData().HDPosterUrl
 end sub

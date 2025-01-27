@@ -8,8 +8,8 @@
     <children>
         <Poster
             id = "itemPoster"
-            loadDisplayMode = "scaleToFill"
-            loadWidth = "400"
+            loadDisplayMode = "scaleToFit"
+            loadWidth = "704"
             loadHeight = "400"/>
     </children>
 </component>
