@@ -44,7 +44,7 @@ sub getcontent()
                         title: item.["original_title"],
                         description: item.["overview"],
                         FHDPosterUrl: "https://image.tmdb.org/t/p/original" + item.["poster_path"],
-                        HDPosterUri: "https://image.tmdb.org/t/p/original" + item.["backdrop_path"],
+                        HDPosterUrl: "https://image.tmdb.org/t/p/original" + item.["backdrop_path"],
                         releaseDate: item.["release_date"],
                         averageRating: item.["vote_average"].toStr().Mid(0, 3),
                         FHDItemWidth: "260"
