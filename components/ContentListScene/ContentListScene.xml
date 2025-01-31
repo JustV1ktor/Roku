@@ -12,7 +12,9 @@
                 itemSpacings = "[10]">
                     <Poster
                     id = "photoPoster"
-                    loadDisplayMode = "scaleToFit"/>
+                    loadDisplayMode = "scaleToFit"
+                    loadWidth = "950"
+                    loadHeight = "530"/>
                     <LayoutGroup
                         layoutDirection = "vert"
                         itemSpacings = "[20]">
@@ -24,6 +26,14 @@
                         <Label
                         id = "descriptionText"
                         wrap = "true"/>
+                            <layoutGroup
+                                layoutDirection = "horiz"
+                                itemSpacings = "[20]">
+                                <Label
+                                id = "averageRating"/>
+                                <Label
+                                id = "releaseDate"/>
+                            </layoutGroup>
                     </LayoutGroup>
             </LayoutGroup>
             <LayoutGroup 
@@ -37,9 +47,9 @@
                     showRowLabel = "[ true ]"
                     showRowCounter = "[ true ]"
                     rowLabelOffset = "[ [0, 20] ]"
-                    numRows = "3"
+                    numRows = "1"
                     itemSize = "[1880, 470]"
-                    rowItemSize = "[[400,400]]"
+                    rowItemSize = "[[260,400]]"
                     rowItemSpacing = "[ [50, 0] ]">
                 </RowList>
             </LayoutGroup>

@@ -1,0 +1,8 @@
+<component name="contentReader" extends="Task">
+    <script type="text/brightscript" uri="contentReader.brs"/>
+
+    <interface> 
+        <field id = "contenturi" type = "uri" />
+        <field id = "content" type = "node" />
+    </interface>
+</component>

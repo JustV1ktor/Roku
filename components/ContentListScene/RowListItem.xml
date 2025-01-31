@@ -9,7 +9,7 @@
         <Poster
             id = "itemPoster"
             loadDisplayMode = "scaleToFit"
-            loadWidth = "704"
+            loadWidth = "260"
             loadHeight = "400"/>
     </children>
 </component>

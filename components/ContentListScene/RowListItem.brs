@@ -3,5 +3,5 @@ sub init()
 end sub
 
 sub showContent(event as Object)
-    m.poster.uri = event.getData().HDPosterUrl
+    m.poster.uri = event.getData().FHDPosterUrl
 end sub
