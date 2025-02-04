@@ -1,0 +1,53 @@
+<component name= "customDialog" extends = "Group">
+    <script type="text/brightscript" uri="customDialog.brs" />
+
+    <interface>
+        <field id = "dialogTitleText" type = "string" onChange = "setTextDialog"/>
+        <field id = "dialogDescriptionText" type = "string" onChange = "setTextDialog"/>
+        <field id = "dialogButtonsText" type = "stringarray" onChange = "setButtonsDialog"/>
+        <field id = "dialogButtonsSetFocus" type = "float" onChange = "setDialogButtonsFocus"/>
+    </interface>
+
+    <children>
+        <Rectangle
+        id = "backGroundOpacity"
+        color = "0x00000066"
+        width = "1920"
+        height = "1080"
+        blendingEnabled = "true"/>
+
+        <LayoutGroup
+            id = "backGroundLayout"
+            horizAlignment = "center"
+            vertAlignment = "center">
+            <Poster
+                id = "backGroundDialog"/>
+        </LayoutGroup>
+
+        <LayoutGroup
+            id = "dialogElement"
+            layoutDirection = "vert"
+            horizAlignment = "center"
+            vertAlignment = "center"
+            itemSpacings = "[20]">
+            <Label
+                id = "title"
+                maxLines = "2"
+                wrap = "true"
+                width = "600"
+                horizAlign = "center"
+                text = "this is title"
+                font = "font:LargeSystemFont"/>
+            <Label 
+                id = "description"
+                maxLines = "4"
+                wrap = "true"
+                width = "600"
+                horizAlign = "center"
+                text = "this is description"/>
+            <ButtonGroup
+                id = "buttonGroup"
+                layoutDirection = "horiz"/>
+        </LayoutGroup>
+    </children>
+</component>

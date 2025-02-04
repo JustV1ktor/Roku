@@ -16,6 +16,12 @@ sub findANdPopulate()
     m.contentRead.contenturi = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc"
     m.contentRead.control = "run"
 
+    m.dialog = CreateObject("roSGNode", "customDialog")
+    
+    m.dialog.dialogTitleText = "title Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tortor purus. Mauris ultrices rutrum nunc eu sollicitudin. Sed congue augue sed tempus vulputate. Integer ultricies ligula eget semper interdum. Mauris a tristique urna. Sed dignissim, diam ac gravida iaculis, eros arcu elementum dolor, eu malesuada velit mauris ac metus. Proin feugiat pellentesque mi vel semper. Quisque eget arcu ligula. Aenean porta eu ipsum sed molestie. Vestibulum accumsan efficitur ipsum eu egestas. Vivamus sed dui ultrices, ultrices sapien eget, vestibulum nunc."
+    m.dialog.dialogDescriptionText = "description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tortor purus. Mauris ultrices rutrum nunc eu sollicitudin. Sed congue augue sed tempus vulputate. Integer ultricies ligula eget semper interdum. Mauris a tristique urna. Sed dignissim, diam ac gravida iaculis, eros arcu elementum dolor, eu malesuada velit mauris ac metus. Proin feugiat pellentesque mi vel semper. Quisque eget arcu ligula. Aenean porta eu ipsum sed molestie. Vestibulum accumsan efficitur ipsum eu egestas. Vivamus sed dui ultrices, ultrices sapien eget, vestibulum nunc."
+    m.dialog.dialogButtonsText = ["accept!", "cancel?", "third button"]
+
     m.rowList.observeField("rowItemFocused", "checkAndPopulateElements")
 end sub
 
@@ -45,7 +51,7 @@ sub setElementsTranslation()
     }, true)
 
     m.releaseDate.update({
-        width:  ((1920 / 2) - 10)
+        width:  (((1920 / 2) / 2) - 10)
     }, true)
 
     m.description.update({
@@ -78,3 +84,21 @@ sub checkAndPopulateElements(event)
     })
 
 end sub
+
+function onKeyEvent(key as String, press as Boolean) as Boolean
+    result = false
+    if press 
+        if key = "options"
+            m.top.appendChild(m.dialog)
+            m.dialog.dialogButtonsSetFocus = true
+            m.dialog.setFocus(true)
+            result = true
+        else if key = "replay"
+            m.top.removeChild(m.dialog)
+            m.dialog.dialogButtonsSetFocus = false
+            m.rowList.setFocus(true)
+            result = true
+        end if
+    end if
+    return result
+end function

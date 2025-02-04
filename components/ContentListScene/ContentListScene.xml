@@ -22,7 +22,7 @@
                         id = "titleText"
                         maxLines = "2"
                         wrap = "true"
-                        color = "0x1177BB"/>
+                        font = "font:LargeSystemFont"/>
                         <Label
                         id = "descriptionText"
                         wrap = "true"/>
