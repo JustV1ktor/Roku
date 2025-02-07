@@ -45,8 +45,8 @@
                 <RowList
                     id = "rowList"
                     itemComponentName = "RowListItem" 
-                    rowFocusAnimationStyle = "fixedFocusWrap"
-                    vertFocusAnimationStyle = "fixedFocus"
+                    rowFocusAnimationStyle = "floatingFocus"
+                    vertFocusAnimationStyle = "floatingFocus"
                     variableWidthItems = "[ true ]"
                     showRowLabel = "[ true ]"
                     showRowCounter = "[ true ]"

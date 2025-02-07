@@ -5,6 +5,7 @@
         <field id = "title" type = "string" alias = "title.text"/>
         <field id = "description" type = "string" alias = "description.text"/>
         <field id = "buttonsText" type = "stringarray" onChange = "setButtonsDialog"/>
+        <field id = "action" type = "string"/>
     </interface>
 
     <children>
