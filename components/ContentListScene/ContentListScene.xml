@@ -1,0 +1,58 @@
+<component name="ContentListScene" extends = "Group" initialFocus  = "rowList">
+    <script type="text/brightscript" uri="ContentListScene.brs"/>
+    <children>
+        <LayoutGroup
+            layoutDirection = "vert"
+            horizAlignment = "left"
+            vertAlignment = "top"
+            translation = "[10, 10]">
+            <LayoutGroup 
+                id = "topElments"
+                layoutDirection = "horiz"
+                itemSpacings = "[10]">
+                    <Poster
+                    id = "photoPoster"
+                    loadDisplayMode = "scaleToFit"
+                    loadWidth = "950"
+                    loadHeight = "530"/>
+                    <LayoutGroup
+                        layoutDirection = "vert"
+                        itemSpacings = "[20]">
+                        <Label
+                        id = "titleText"
+                        maxLines = "2"
+                        wrap = "true"
+                        color = "0x1177BB"/>
+                        <Label
+                        id = "descriptionText"
+                        wrap = "true"/>
+                            <layoutGroup
+                                layoutDirection = "horiz"
+                                itemSpacings = "[20]">
+                                <Label
+                                id = "averageRating"/>
+                                <Label
+                                id = "releaseDate"/>
+                            </layoutGroup>
+                    </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup 
+                id = "bottomElments">
+                <RowList
+                    id = "rowList"
+                    itemComponentName = "RowListItem" 
+                    rowFocusAnimationStyle = "fixedFocusWrap"
+                    vertFocusAnimationStyle = "fixedFocus"
+                    variableWidthItems = "[ true ]"
+                    showRowLabel = "[ true ]"
+                    showRowCounter = "[ true ]"
+                    rowLabelOffset = "[ [0, 20] ]"
+                    numRows = "1"
+                    itemSize = "[1880, 470]"
+                    rowItemSize = "[[260,400]]"
+                    rowItemSpacing = "[ [50, 0] ]">
+                </RowList>
+            </LayoutGroup>
+        </LayoutGroup>
+    </children>
+</component>

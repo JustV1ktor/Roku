@@ -3,7 +3,6 @@
     <script type="text/brightscript" uri="pkg:/components/RawData/RawData.brs"/>
     <children>
         <LayoutGroup
-            id = "layoutGroup"
             layoutDirection = "vert"
             horizAlignment = "center"
             vertAlignment = "center"
@@ -40,7 +39,7 @@
                 itemSpacings = "[10]">
                 <Rectangle
                     id = "RectangleOne"
-                    color = "0x000000FF"/>
+                    color = "0x1FD4AA"/>
                 <Rectangle
                     id = "RectangleTwo"
                     color = "0x880000FF"/>
@@ -49,7 +48,7 @@
                     color = "0x888B00FF"/>
                 <Rectangle
                     id = "RectangleFour"
-                    color = "0x0000821D"/>
+                    color = "0xDD821D"/>
             </LayoutGroup>
         </LayoutGroup>
     </children>
