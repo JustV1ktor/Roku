@@ -22,7 +22,11 @@
                         id = "titleText"
                         maxLines = "2"
                         wrap = "true"
-                        color = "0x1177BB"/>
+                        font = "font:LargeSystemFont"/>
+                        <Rectangle
+                            id = "devider"
+                            color = "0xffffffff"
+                            height = "2"/>
                         <Label
                         id = "descriptionText"
                         wrap = "true"/>
@@ -41,15 +45,15 @@
                 <RowList
                     id = "rowList"
                     itemComponentName = "RowListItem" 
-                    rowFocusAnimationStyle = "fixedFocusWrap"
-                    vertFocusAnimationStyle = "fixedFocus"
+                    rowFocusAnimationStyle = "floatingFocus"
+                    vertFocusAnimationStyle = "floatingFocus"
                     variableWidthItems = "[ true ]"
                     showRowLabel = "[ true ]"
                     showRowCounter = "[ true ]"
                     rowLabelOffset = "[ [0, 20] ]"
                     numRows = "1"
                     itemSize = "[1880, 470]"
-                    rowItemSize = "[[260,400]]"
+                    rowItemSize = "[[265,400]]"
                     rowItemSpacing = "[ [50, 0] ]">
                 </RowList>
             </LayoutGroup>

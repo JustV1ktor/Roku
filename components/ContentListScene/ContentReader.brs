@@ -40,14 +40,19 @@ sub getcontent()
                     itemcontent.addField("releaseDate", "string", false)
                     itemcontent.addField("averageRating", "float", false)
 
+                    if item.backdrop_path = invalid
+                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w200" + item.poster_path
+                    else 
+                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w300" + item.backdrop_path
+                    end if
+
                     itemcontent.setFields({
-                        title: item.["original_title"],
-                        description: item.["overview"],
-                        FHDPosterUrl: "https://image.tmdb.org/t/p/original" + item.["poster_path"],
-                        HDPosterUrl: "https://image.tmdb.org/t/p/original" + item.["backdrop_path"],
-                        releaseDate: item.["release_date"],
-                        averageRating: item.["vote_average"].toStr().Mid(0, 3),
-                        FHDItemWidth: "260"
+                        title: item.original_title,
+                        description: item.overview,
+                        FHDPosterUrl: "https://image.tmdb.org/t/p/w200" + item.poster_path,
+                        releaseDate: item.release_date,
+                        averageRating: item.vote_average.toStr().Mid(0, 3),
+                        FHDItemWidth: "265"
                     })
                 end for
 

@@ -1,0 +1,83 @@
+<component name= "CustomDialog" extends = "Group">
+    <script type="text/brightscript" uri="CustomDialog.brs"/>
+
+    <interface>
+        <field id = "title" type = "string" alias = "title.text"/>
+        <field id = "description" type = "string" alias = "description.text"/>
+        <field id = "buttonsText" type = "stringarray" onChange = "setButtonsDialog"/>
+        <field id = "action" type = "string"/>
+    </interface>
+
+    <children>
+        <Rectangle
+        id = "backGroundOpacity"
+        color = "0x00000066"
+        width = "1920"
+        height = "1080"
+        blendingEnabled = "true"/>
+
+        <LayoutGroup
+            horizAlignment = "center"
+            vertAlignment = "center"
+            translation = "[960, 540]">
+            <Rectangle
+                id = "dialogShadow"
+                color = "0x00000066"
+                blendingEnabled = "true"/>
+        </LayoutGroup>
+
+        <LayoutGroup
+            id = "backGroundLayout"
+            horizAlignment = "center"
+            vertAlignment = "center">
+            <Rectangle
+                id = "backGroundDialog"
+                color = "0x888888ff"/>
+        </LayoutGroup>
+
+        <LayoutGroup
+            id = "mainDialogElement"
+            horizAlignment = "center"
+            vertAlignment = "center"
+            layoutDirection = "horiz"
+            itemSpacings = "[25]">
+            <Poster
+                id = "sideCard"
+                uri = "pkg:/images/istockphoto-154232673-612x612.jpg"
+                loadDisplayMode = "scaleToFit"/>
+            <LayoutGroup
+                id = "dialogElement"
+                layoutDirection = "vert"
+                horizAlignment = "center"
+                vertAlignment = "center"
+                itemSpacings = "[20]">
+                <Label
+                    id = "title"
+                    maxLines = "2"
+                    wrap = "true"
+                    width = "800"
+                    horizAlign = "center"
+                    font = "font:LargeSystemFont"/>
+                <Rectangle
+                    id = "devider"
+                    color = "0xffffffff"
+                    width = "800"
+                    height = "2"/>
+                <Label 
+                    id = "description"
+                    maxLines = "6"
+                    wrap = "true"
+                    width = "800"
+                    horizAlign = "center"/>
+                <LayoutGroup
+                    id = "buttonGroup"
+                    layoutDirection = "horiz">
+                    <Button
+                        id = "firstButton"/>
+                    <Button
+                        id = "secondButton"/>
+                </LayoutGroup>
+            </LayoutGroup>
+        </LayoutGroup>
+    </children>
+</component>

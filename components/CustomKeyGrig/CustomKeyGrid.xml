@@ -1,0 +1,13 @@
+<component name="CustomKeyGrid" extends="Group">
+    <script type="text/brightscript" uri="CustomKeyGrid.brs" />
+
+    <children>
+        <LayoutGroup
+            id = "mainArea"
+            translation = "[960, 540]"
+            horizAlignment = "center"
+            vertAlignment = "center"
+            layoutDirection = "vert">
+        </LayoutGroup>  
+    </children>
+</component>
