@@ -3,15 +3,6 @@
     <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
 
     <children>
-
-        <LayoutGroup
-            id = "activeLayout">
-            <Rectangle
-                id = "activeRectnagle"
-                blendingEnabled = "true"
-                color = "0xffffff88"/>
-        </LayoutGroup>
-
         <LayoutGroup
             id = "mainArea"
             translation = "[960, 540]"

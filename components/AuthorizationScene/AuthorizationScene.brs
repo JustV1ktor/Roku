@@ -3,8 +3,6 @@ sub init()
 	m.emailTextEditBox = m.top.findNode("emailTextEditBox")
 	m.passwordTextEditBox = m.top.findNode("passwordTextEditBox")
 	m.buttonUserAuthorization = m.top.findNode("userAuthorization")
-	m.activeLayout = m.top.findNode("activeLayout")
-	m.activeRectnagle = m.top.findNode("activeRectnagle")
 
 	m.scene = m.top.getScene()
 
