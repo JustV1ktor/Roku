@@ -69,67 +69,10 @@ sub checkAndPopulateElements(event)
     m.releaseDate.text = "Release date: " + itemContent.releaseDate.toStr()
 end sub
 
-sub onActionResponse(event)
-    removeDialog()
-    m.isResponseDialogOpened = true
-
-    m.timer = CreateObject("roSGNode", "timer")
-    m.timer.duration = 10
-    m.timer.observeFieldScoped("fire" , "onActionEnd")
-
-    m.labelLayout = CreateObject("roSGNode", "LayoutGroup")
-    m.labelLayout.update({
-        translation: [960, 540],
-        horizAlignment: "center",
-        vertAlignment: "center"
-    }, true)
-
-    m.shadowLayout = CreateObject("roSGNode", "LayoutGroup")
-    m.shadowLayout.update({
-        translation: [960, 540],
-        horizAlignment: "center",
-        vertAlignment: "center"
-    }, true)
-
-    m.label = CreateObject("roSGNode", "label")
-    m.label.update({
-        text: event.getData(),
-        horizAlign: "center",
-        vertAlign: "center"
-    }, true)
-
-    m.shadow = CreateObject("roSGNode", "Rectangle")
-
-    m.shadow.update({
-        color: "0x000000AA",
-        blendingEnabled: "true",
-        width: m.label.boundingRect().width + 25,
-        height: m.label.boundingRect().height + 25
-    },true)
-
-    m.labelLayout.insertChild(m.label, 0)
-    m.shadowLayout.insertChild(m.shadow, 0)
-    m.top.appendChild(m.shadowLayout)
-    m.top.appendChild(m.labelLayout)
-    m.timer.control = "start"
-end sub
-
-sub onActionEnd()
-    m.timer.unObserveFieldScoped("fire")
-    m.top.removeChild(m.timer)
-    m.top.removeChild(m.labelLayout)
-    m.top.removeChild(m.shadowLayout)
-    m.timer = invalid
-    m.labelLayout = invalid
-    m.shadowLayout = invalid
-
-    m.isResponseDialogOpened = false
-end sub
-
 sub appendDialog()
     m.dialog = CreateObject("roSGNode", "CustomDialog")
     
-    m.dialog.observeField("action", "onActionResponse")
+    m.dialog.observeField("action", "ActionResponse")
     m.dialog.title = "title Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tortor purus. Mauris ultrices rutrum nunc eu sollicitudin. Sed congue augue sed tempus vulputate. Integer ultricies ligula eget semper interdum. Mauris a tristique urna. Sed dignissim, diam ac gravida iaculis, eros arcu elementum dolor, eu malesuada velit mauris ac metus. Proin feugiat pellentesque mi vel semper. Quisque eget arcu ligula. Aenean porta eu ipsum sed molestie. Vestibulum accumsan efficitur ipsum eu egestas. Vivamus sed dui ultrices, ultrices sapien eget, vestibulum nunc."
     m.dialog.description = "description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tortor purus. Mauris ultrices rutrum nunc eu sollicitudin. Sed congue augue sed tempus vulputate. Integer ultricies ligula eget semper interdum. Mauris a tristique urna. Sed dignissim, diam ac gravida iaculis, eros arcu elementum dolor, eu malesuada velit mauris ac metus. Proin feugiat pellentesque mi vel semper. Quisque eget arcu ligula. Aenean porta eu ipsum sed molestie. Vestibulum accumsan efficitur ipsum eu egestas. Vivamus sed dui ultrices, ultrices sapien eget, vestibulum nunc."
     m.dialog.buttonsText = ["accept!", "cancel?", "third button"]
@@ -138,6 +81,10 @@ sub appendDialog()
     m.dialog.setFocus(true)
 end sub
 
+sub ActionResponse(event)
+    onActionResponse(event)
+    removeDialog()
+end sub
 
 sub removeDialog()
     m.rowList.setFocus(true)

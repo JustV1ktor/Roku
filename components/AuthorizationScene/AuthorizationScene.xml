@@ -1,0 +1,36 @@
+<component name="AuthorizationScene" extends="Group">
+    <script type="text/brightscript" uri="AuthorizationScene.brs" />
+    <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
+
+    <children>
+
+        <LayoutGroup
+            id = "activeLayout">
+            <Rectangle
+                id = "activeRectnagle"
+                blendingEnabled = "true"
+                color = "0xffffff88"/>
+        </LayoutGroup>
+
+        <LayoutGroup
+            id = "mainArea"
+            translation = "[960, 540]"
+            horizAlignment = "center"
+            vertAlignment = "center">
+            <TextEditBox
+                id = "emailTextEditBox"
+                focusable = "true"
+                hintText = "email"
+                clearOnDownKey = "false"/>
+            <TextEditBox
+                id = "passwordTextEditBox"
+                focusable = "true"
+                hintText = "password"
+                secureMode = "true"
+                clearOnDownKey = "false"/>
+            <Button
+                id = "userAuthorization"
+                text = "sign in!"/>
+        </LayoutGroup>
+    </children>
+</component>
