@@ -10,7 +10,7 @@
             <Rectangle
                 width = "1920"
                 height = "1080"
-                color = "0x313040"/>
+                color = "0x31304088"/>
         </LayoutGroup>
         
         <LayoutGroup
@@ -50,7 +50,7 @@
         <SequentialAnimation
             id = "firstRectangleAnimation">
             <Animation 
-                duration = "2"
+                duration = "1"
                 repeat = "true"
                 easeFunction="linear">
                 <FloatFieldInterpolator 
@@ -63,7 +63,7 @@
         <SequentialAnimation
             id = "secondRectangleAnimation">
             <Animation 
-                duration = "2"
+                duration = "1"
                 repeat = "true"
                 easeFunction="linear">
                 <FloatFieldInterpolator 
@@ -76,7 +76,7 @@
         <SequentialAnimation
             id = "thirdRectangleAnimation">
             <Animation 
-                duration = "2"
+                duration = "1"
                 repeat = "true"
                 easeFunction="linear">
                 <FloatFieldInterpolator 
@@ -89,7 +89,7 @@
         <SequentialAnimation
             id = "fourthRectangleAnimation">
             <Animation 
-                duration = "2"
+                duration = "1"
                 repeat = "true"
                 easeFunction="linear">
                 <FloatFieldInterpolator 
@@ -102,7 +102,7 @@
         <SequentialAnimation
             id = "fifthRectangleAnimation">
             <Animation 
-                duration = "2"
+                duration = "1"
                 repeat = "true"
                 easeFunction="linear">
                 <FloatFieldInterpolator 
