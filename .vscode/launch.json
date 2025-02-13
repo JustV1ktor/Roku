@@ -2,11 +2,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "envFile": "${workspaceFolder}/.env",
             "name": "BrightScript Debug: Launch",
             "type": "brightscript",
             "request": "launch",
-            "host": "192.168.89.218",
-            "password": "padev",
+            "host": "${env:ROKU_HOST}",
+            "password": "${env:ROKU_PASSWORD}",
             "rootDir": "${workspaceFolder}"
         }
     ]

@@ -14,8 +14,30 @@ sub findANdPopulate()
 
     getContent()
 
+    m.isActionLoaderOpened = false
     m.isResponseDialogOpened = false
     m.rowList.observeField("rowItemFocused", "checkAndPopulateElements")
+    m.poster.observeFieldScoped("loadStatus", "showActionLoader")
+end sub
+
+sub showActionLoader(event)
+    m.isActionLoaderOpened = true
+    if event.getData() = "loading"
+        m.actionLoader = CreateObject("roSGNode", "ActionLoader")
+        m.top.appendChild(m.actionLoader)
+        m.actionLoader.setFocus(true)
+    ' else if event.getData() = "ready"
+    '     m.rowList.setFocus(true)
+    '     m.top.removeChild(m.actionLoader)
+    '     m.actionLoader = invalid
+    end if
+end sub
+
+sub removeActionLoader()
+    m.rowList.setFocus(true)
+    m.isActionLoaderOpened = false
+    m.top.removeChild(m.actionLoader)
+    m.actionLoader = invalid
 end sub
 
 sub getContent()
@@ -148,11 +170,14 @@ end sub
 function onKeyEvent(key as String, press as Boolean) as Boolean
     result = false
     if press 
-        if key = "options"
+        if key = "options" AND m.isActionLoaderOpened = false
             if m.isResponseDialogOpened = false then appendDialog()
             result = true
         else if key = "replay"
             removeDialog()
+            result = true
+        else if key = "back" AND m.isActionLoaderOpened = true
+            removeActionLoader()
             result = true
         end if
     end if

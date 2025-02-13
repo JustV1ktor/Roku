@@ -1,0 +1,115 @@
+<component name="ActionLoader" extends = "Group">
+    <script type="text/brightscript" uri="ActionLoader.brs" />
+    
+    <children>
+
+        <LayoutGroup
+            translation = "[960, 540]"
+            horizAlignment = "center"
+            vertAlignment = "center">
+            <Rectangle
+                width = "1920"
+                height = "1080"
+                color = "0x313040"/>
+        </LayoutGroup>
+        
+        <LayoutGroup
+            id = "mainArea"
+            translation = "[960, 540]"
+            horizAlignment = "center"
+            vertAlignment = "center"
+            layoutDirection = "horiz"
+            itemSpacings = "[20]">
+            <Rectangle
+                id = "firstRectangle"
+                color = "0xffffff"
+                width = "30"
+                height = "70"/>
+            <Rectangle
+                id = "secondRectangle"
+                color = "0xffffff"
+                width = "30"
+                height = "70"/>
+            <Rectangle
+                id = "thirdRectangle"
+                color = "0xffffff"
+                width = "30"
+                height = "70"/>
+            <Rectangle
+                id = "fourthRectangle"
+                color = "0xffffff"
+                width = "30"
+                height = "70"/>
+            <Rectangle
+                id = "fifthRectangle"
+                color = "0xffffff"
+                width = "30"
+                height = "70"/>
+        </LayoutGroup>
+
+        <SequentialAnimation
+            id = "firstRectangleAnimation">
+            <Animation 
+                duration = "2"
+                repeat = "true"
+                easeFunction="linear">
+                <FloatFieldInterpolator 
+                    key = "[0.0,0.5,1.0]"
+                    keyValue = "[70.0, 140.0, 70.0]" 
+                    fieldToInterp = "firstRectangle.height"/>            
+            </Animation>
+        </SequentialAnimation>
+
+        <SequentialAnimation
+            id = "secondRectangleAnimation">
+            <Animation 
+                duration = "2"
+                repeat = "true"
+                easeFunction="linear">
+                <FloatFieldInterpolator 
+                    key = "[0.0,0.5,1.0]"
+                    keyValue = "[70.0, 140.0, 70.0]" 
+                    fieldToInterp = "secondRectangle.height"/>            
+            </Animation>
+        </SequentialAnimation>
+
+        <SequentialAnimation
+            id = "thirdRectangleAnimation">
+            <Animation 
+                duration = "2"
+                repeat = "true"
+                easeFunction="linear">
+                <FloatFieldInterpolator 
+                    key = "[0.0,0.5,1.0]"
+                    keyValue = "[70.0, 140.0, 70.0]" 
+                    fieldToInterp = "thirdRectangle.height"/>            
+            </Animation>
+        </SequentialAnimation>
+
+        <SequentialAnimation
+            id = "fourthRectangleAnimation">
+            <Animation 
+                duration = "2"
+                repeat = "true"
+                easeFunction="linear">
+                <FloatFieldInterpolator 
+                    key = "[0.0,0.5,1.0]"
+                    keyValue = "[70.0, 140.0, 70.0]" 
+                    fieldToInterp = "fourthRectangle.height"/>            
+            </Animation>
+        </SequentialAnimation>
+            
+        <SequentialAnimation
+            id = "fifthRectangleAnimation">
+            <Animation 
+                duration = "2"
+                repeat = "true"
+                easeFunction="linear">
+                <FloatFieldInterpolator 
+                    key = "[0.0,0.5,1.0]"
+                    keyValue = "[70.0, 140.0, 70.0]" 
+                    fieldToInterp = "fifthRectangle.height"/>            
+            </Animation>
+        </SequentialAnimation>
+    </children>
+</component>

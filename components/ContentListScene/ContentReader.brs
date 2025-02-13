@@ -41,9 +41,9 @@ sub getcontent()
                     itemcontent.addField("averageRating", "float", false)
 
                     if item.backdrop_path = invalid
-                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w200" + item.poster_path
+                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w500" + item.poster_path
                     else 
-                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w300" + item.backdrop_path
+                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w500" + item.backdrop_path
                     end if
 
                     itemcontent.setFields({
