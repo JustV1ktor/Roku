@@ -1,4 +1,8 @@
 sub init()
+	populate()
+end sub
+
+sub populate()
 	m.mainArea = m.top.findNode("mainArea")
 	m.emailTextEditBox = m.top.findNode("emailTextEditBox")
 	m.passwordTextEditBox = m.top.findNode("passwordTextEditBox")
@@ -48,11 +52,23 @@ sub checkEmailAndPassword()
 		onActionResponse("Please enter email and password!")
 	else
 		if m.emailValidation.isMatch(m.emailTextEditBox.text) AND m.passwordValidation.isMatch(m.passwordTextEditBox.text)
-			onActionResponse("email and password are valid!")
+			m.authorizationTask = CreateObject("roSGNode", "AuthorizationTask")
+
+			m.authorizationTask.email = m.emailTextEditBox.text
+			m.authorizationTask.password = m.passwordTextEditBox.text
+
+			m.authorizationTask.control = "run"
+
+			m.authorizationTask.observeField("response", "setResponse")
 		else
 			onActionResponse("email or password is incorrect")
 		end if
 	end if
+end sub
+
+sub setResponse()
+	response = "welcome back " + m.authorizationTask.response
+	onActionResponse(response)
 end sub
 
 sub onButtonDialogPressed(event)

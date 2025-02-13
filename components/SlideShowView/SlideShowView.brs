@@ -1,4 +1,8 @@
 sub init()
+    findAndPopulate()
+end sub
+
+sub findAndPopulate()
     findAndObserveNodes()
     setElementsTranslation()
 
