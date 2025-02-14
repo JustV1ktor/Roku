@@ -1,5 +1,6 @@
 <component name="ContentListScene" extends = "Group" initialFocus  = "rowList">
     <script type="text/brightscript" uri="ContentListScene.brs"/>
+    <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
     <children>
         <LayoutGroup
             layoutDirection = "vert"
