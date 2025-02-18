@@ -1,9 +1,0 @@
-<component name="AuthorizationTask" extends="Task">
-    <script type="text/brightscript" uri="AuthorizationTask.brs" />
-    
-    <interface>
-        <field id="email" type="string"/>
-        <field id="password" type="string"/>
-        <field id="response" type="assocarray"/>
-    </interface>
-</component>
