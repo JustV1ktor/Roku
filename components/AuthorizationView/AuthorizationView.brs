@@ -59,7 +59,7 @@ sub checkEmailAndPassword()
 
 			m.authorizationTask.control = "run"
 
-			m.authorizationTask.observeField("response", "setResponse")
+			m.authorizationTask.observeFieldScoped("response", "setResponse")
 		else
 			onActionResponse("email or password is incorrect")
 		end if
@@ -67,8 +67,19 @@ sub checkEmailAndPassword()
 end sub
 
 sub setResponse()
-	response = "welcome back " + m.authorizationTask.response
-	onActionResponse(response)
+	if m.authorizationTask.response.success = true
+		sec = CreateObject("roRegistrySection", "userData")
+	
+		sec.WriteMulti({
+			"userName": m.authorizationTask.response.name,
+			"userNickName": m.authorizationTask.response.userName,
+			"userPassword": m.passwordTextEditBox.text
+		})
+	
+		m.top.isLoginSuccess = true
+	else
+		onActionResponse("something went wrong, request is not success")
+	end if 
 end sub
 
 sub onButtonDialogPressed(event)

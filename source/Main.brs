@@ -24,3 +24,6 @@ sub Main()
     end while
 end sub
 
+function GetSceneName() as string
+    return "MainScene"
+end function

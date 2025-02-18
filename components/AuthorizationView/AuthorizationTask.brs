@@ -27,7 +27,12 @@ sub post()
                 responseString = message.getString()
                 resposnseObject = ParseJson(responseString)
 
-                m.top.response = resposnseObject.name
+                response = {
+                    success: resposnseObject.success,
+                    name: resposnseObject.name,
+                    userName: resposnseObject.userName,
+                }
+                m.top.response = response
             end if
         end if
     end while

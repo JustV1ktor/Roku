@@ -1,5 +1,5 @@
-<component name="ContentListScene" extends = "Group" initialFocus  = "rowList">
-    <script type="text/brightscript" uri="ContentListScene.brs"/>
+<component name="ContentListView" extends = "Group" initialFocus  = "rowList">
+    <script type="text/brightscript" uri="ContentListView.brs"/>
     <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
     <children>
         <LayoutGroup

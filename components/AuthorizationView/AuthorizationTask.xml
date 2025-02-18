@@ -4,6 +4,6 @@
     <interface>
         <field id="email" type="string"/>
         <field id="password" type="string"/>
-        <field id="response" type="string"/>
+        <field id="response" type="assocarray"/>
     </interface>
 </component>

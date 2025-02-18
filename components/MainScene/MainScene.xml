@@ -1,6 +1,10 @@
 <component name="MainScene" extends="Scene">
     <script type="text/brightscript" uri="MainScene.brs"/>
+    <interface>
+        <field id="ComponentController" type="node" />
+    </interface>
     <children>
-
+         <ComponentController
+            id="ComponentController" />
     </children>
 </component>

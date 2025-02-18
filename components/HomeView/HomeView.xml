@@ -1,0 +1,49 @@
+<component name="HomeView" extends="Group">
+    <script type="text/brightscript" uri="HomeView.brs" />
+
+    <interface>
+        <field id="userData" type="assocarray"/>
+        <field id="showNextView" type="boolean"/>
+        <field id="isUserLogedOut" type="boolean" />
+    </interface>
+
+    <children>
+        <LayoutGroup
+            id = "mainArea"
+            horizAlignment = "center"
+            vertAlignment = "center"
+            translation = "[960, 540]"
+            layoutDirection = "vert">
+            <Label
+                text = "Home"/>
+            <LayoutGroup
+                layoutDirection = "horiz">
+                <Label
+                    text = "Your name is: "/>
+                <Label
+                    id = "userName"/>
+            </LayoutGroup>
+            <LayoutGroup
+                layoutDirection = "horiz">
+                <Label
+                    text = "Your nickname is: "/>
+                <Label
+                    id = "userNickName"/>
+            </LayoutGroup>
+            <LayoutGroup
+                layoutDirection = "horiz">
+                <Label
+                    text = "Your Password is: "/>
+                <TextEditBox
+                    secureMode = "true"
+                    id = "userPassword"/>
+            </LayoutGroup>
+            <Button
+                text = "show Content list"
+                id = "showNextView"/>
+            <Button
+                text = "Log out of account"
+                id = "logOut"/>
+        </LayoutGroup>
+    </children>
+</component>

@@ -1,7 +1,11 @@
-<component name="AuthorizationScene" extends="Group">
-    <script type="text/brightscript" uri="AuthorizationScene.brs" />
+<component name="AuthorizationView" extends="Group">
+    <script type="text/brightscript" uri="AuthorizationView.brs" />
     <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
 
+    <interface>
+        <field id="isLoginSuccess" type="boolean" />
+    </interface>
+    
     <children>
         <LayoutGroup
             id = "mainArea"

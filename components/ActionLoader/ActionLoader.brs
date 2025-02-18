@@ -1,4 +1,8 @@
 sub init()
+    findAndPopulate()
+end sub
+
+sub findAndPopulate()
     firstRectangleAnimation = m.top.FindNode("firstRectangleAnimation")
     m.secondRectangleAnimation = m.top.FindNode("secondRectangleAnimation")
     m.thirdRectangleAnimation = m.top.FindNode("thirdRectangleAnimation")
