@@ -3,23 +3,23 @@ sub init()
 end sub
 
 sub post()
-    m.port = CreateObject("roMessagePort")
-	m.transfer = CreateObject("roURLTransfer")
-	m.transfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
-	m.transfer.InitClientCertificates()
-	m.transfer.setMessagePort(m.port)
+    port = CreateObject("roMessagePort")
+    transfer = CreateObject("roURLTransfer")
+    transfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
+    transfer.InitClientCertificates()
+    transfer.setMessagePort(port)
 
-	m.transfer.setURL("https://91097ac0-7860-41d9-875f-2973004e7ece.mock.pstmn.io/login")
+    transfer.setURL("https://91097ac0-7860-41d9-875f-2973004e7ece.mock.pstmn.io/login")
 
     body = {
         login: m.top.email,
         password: m.top.password
     }
 
-    m.transfer.AsyncPostFromString(FormatJson(body))
+    transfer.AsyncPostFromString(FormatJson(body))
 
     while true
-        message = Wait(3000, m.port)
+        message = Wait(3000, port)
         messageType = type(message)
         if messageType = "roUrlEvent"
             responseCode = message.getResponseCode()

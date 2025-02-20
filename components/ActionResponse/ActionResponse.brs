@@ -1,60 +1,55 @@
 sub onActionResponse(event)
-    if type(event) = "roSGNodeEvent"
-        textToShow = event.getData()
-    else
-        textToShow = event
-    end if
-    m.isResponseDialogOpened = true
+    if type(event) = "roSGNodeEvent" then _textToShow = event.getData() else _textToShow = event
+    m._isResponseDialogOpened = true
 
-    m.timer = CreateObject("roSGNode", "timer")
-    m.timer.duration = 3
-    m.timer.observeFieldScoped("fire" , "onActionEnd")
+    m._timer = CreateObject("roSGNode", "timer")
+    m._timer.duration = 3
+    m._timer.observeFieldScoped("fire" , "_onActionEnd")
 
-    m.labelLayout = CreateObject("roSGNode", "LayoutGroup")
-    m.labelLayout.update({
+    m._labelLayout = CreateObject("roSGNode", "LayoutGroup")
+    m._labelLayout.update({
         translation: [960, 540],
         horizAlignment: "center",
         vertAlignment: "center"
     }, true)
 
-    m.shadowLayout = CreateObject("roSGNode", "LayoutGroup")
-    m.shadowLayout.update({
+    m._shadowLayout = CreateObject("roSGNode", "LayoutGroup")
+    m._shadowLayout.update({
         translation: [960, 540],
         horizAlignment: "center",
         vertAlignment: "center"
     }, true)
 
-    m.label = CreateObject("roSGNode", "label")
-    m.label.update({
-        text: textToShow,
+    label = CreateObject("roSGNode", "Label")
+    label.update({
+        text: _textToShow,
         horizAlign: "center",
         vertAlign: "center"
     }, true)
 
-    m.shadow = CreateObject("roSGNode", "Rectangle")
-
-    m.shadow.update({
+    shadow = CreateObject("roSGNode", "Rectangle")
+    shadow.update({
         color: "0x000000AA",
         blendingEnabled: "true",
-        width: m.label.boundingRect().width + 25,
-        height: m.label.boundingRect().height + 25
+        width: label.boundingRect().width + 25,
+        height: label.boundingRect().height + 25
     },true)
 
-    m.labelLayout.insertChild(m.label, 0)
-    m.shadowLayout.insertChild(m.shadow, 0)
-    m.top.appendChild(m.shadowLayout)
-    m.top.appendChild(m.labelLayout)
-    m.timer.control = "start"
+    m._labelLayout.insertChild(label, 0)
+    m._shadowLayout.insertChild(shadow, 0)
+    m.top.appendChild(m._shadowLayout)
+    m.top.appendChild(m._labelLayout)
+    m._timer.control = "start"
 end sub
 
-sub onActionEnd()
-    m.timer.unObserveFieldScoped("fire")
-    m.top.removeChild(m.timer)
-    m.top.removeChild(m.labelLayout)
-    m.top.removeChild(m.shadowLayout)
-    m.timer = invalid
-    m.labelLayout = invalid
-    m.shadowLayout = invalid
+sub _onActionEnd()
+    m._timer.unObserveFieldScoped("fire")
+    m.top.removeChild(m._timer)
+    m.top.removeChild(m._labelLayout)
+    m.top.removeChild(m._shadowLayout)
+    m._timer = invalid
+    m._labelLayout = invalid
+    m._shadowLayout = invalid
 
-    m.isResponseDialogOpened = false
+    m._isResponseDialogOpened = false
 end sub

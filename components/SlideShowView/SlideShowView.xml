@@ -1,6 +1,4 @@
 <component name="SlideShowView" extends="Group">
-    <script type="text/brightscript" uri="SlideShowView.brs"/>
-    <script type="text/brightscript" uri="pkg:/components/RawData/RawData.brs"/>
     <children>
         <LayoutGroup
             layoutDirection = "vert"
@@ -15,7 +13,7 @@
                 id = "elementTop"
                 layoutDirection = "horiz">
                 <Poster
-                id = "posterPhoto"/>
+                id = "poster"/>
                 <LayoutGroup
                     id = "buttonsGroup">
                     <Button
@@ -38,18 +36,21 @@
                 layoutDirection = "horiz"
                 itemSpacings = "[10]">
                 <Rectangle
-                    id = "RectangleOne"
+                    id = "rectangleOne"
                     color = "0x1FD4AA"/>
                 <Rectangle
-                    id = "RectangleTwo"
+                    id = "rectangleTwo"
                     color = "0x880000FF"/>
                 <Rectangle
-                    id = "RectangleThree"
+                    id = "rectangleThree"
                     color = "0x888B00FF"/>
                 <Rectangle
-                    id = "RectangleFour"
+                    id = "rectangleFour"
                     color = "0xDD821D"/>
             </LayoutGroup>
         </LayoutGroup>
     </children>
+
+    <script type="text/brightscript" uri="SlideShowView.brs"/>
+    <script type="text/brightscript" uri="pkg:/components/RawData/RawData.brs"/>
 </component>

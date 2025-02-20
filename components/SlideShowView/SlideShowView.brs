@@ -1,46 +1,27 @@
 sub init()
-    findAndPopulate()
+    _findAndPopulate()
 end sub
 
-sub findAndPopulate()
-    findAndObserveNodes()
-    setElementsTranslation()
+sub _findAndPopulate()
+    buttonPrevious = m.top.findNode("buttonPrevious")
+    buttonNext = m.top.findNode("buttonNext")
+    buttonSlideShow = m.top.findNode("buttonSlideShow")
 
-    m.photoArray = rawPhoto()
-    m.colorsArray = rawColors()
+    buttonPrevious.observeFieldScoped("buttonSelected", "_onPreviousButtonSelected")
+    buttonNext.observeFieldScoped("buttonSelected", "_onNextButtonSelected")
+    buttonSlideShow.observeFieldScoped("buttonSelected", "_onSlideShowButtonSelected")
 
-    m.poster.setField("uri", m.photoArray[0])
+    m._poster = m.top.findNode("poster")
 
-    m.buttons = [m.buttonSlideShow, m.buttonNext, m.buttonPrevious]
-    m.rectangles = [m.rectangleOne, m.rectangleTwo, m.rectangleThree, m.rectangleFour]
+    rectangleOne = m.top.findNode("rectangleOne")
+    rectangleTwo = m.top.findNode("rectangleTwo")
+    rectangleThree = m.top.findNode("rectangleThree")
+    rectangleFour = m.top.findNode("rectangleFour")
 
-    m.time = 0
-    m.currentButton = 2
-    m.currentPhoto = 0
-end sub
+    m._timer = m.top.findNode("timer")
+    m._timer.observeFieldScoped("fire", "_onFirePhotoChanges")
 
-sub findAndObserveNodes()
-    m.buttonPrevious = m.top.findNode("buttonPrevious")
-    m.buttonNext = m.top.findNode("buttonNext")
-    m.buttonSlideShow = m.top.findNode("buttonSlideShow")
-
-    m.buttonPrevious.observeField("buttonSelected", "onPreviousButtonSelected")
-    m.buttonNext.observeField("buttonSelected", "onNextButtonSelected")
-    m.buttonSlideShow.observeField("buttonSelected", "onSlideShowButtonSelected")
-
-    m.poster = m.top.findNode("posterPhoto")
-
-    m.rectangleOne = m.top.findNode("RectangleOne")
-    m.rectangleTwo = m.top.findNode("RectangleTwo")
-    m.rectangleThree = m.top.findNode("RectangleThree")
-    m.rectangleFour = m.top.findNode("RectangleFour")
-
-    m.timer = m.top.findNode("timer")
-    m.timer.observeField("fire", "onFirePhotoChanges")
-end sub
-
-sub setElementsTranslation()
-    m.poster.update({
+    m._poster.update({
         width:  (1920 / 2) - 10,
         height: (1080 / 2) - 10
     }, true)
@@ -48,75 +29,82 @@ sub setElementsTranslation()
     rectangleWidth = (1920 - (10 * 4)) / 4
     rectangleheight = (1080 - (10 * 2)) / 2
 
-    m.rectangleOne.update({
+    rectangleOne.update({
         width: rectangleWidth,
         height: rectangleheight
     }, true)
-    m.rectangleTwo.update({
+    rectangleTwo.update({
         width: rectangleWidth,
         height: rectangleheight
     }, true)
-    m.rectangleThree.update({
+    rectangleThree.update({
         width: rectangleWidth,
         height: rectangleheight
     }, true)
-    m.rectangleFour.update({
+    rectangleFour.update({
         width: rectangleWidth,
         height: rectangleheight
     }, true)
     
-
     buttonHeight = ((1080 / 2) - 10) / 3
     buttonWidth = (1920 / 2) - 10
 
-    m.buttonNext.update({
+    buttonNext.update({
         minWidth: buttonWidth,
         height: buttonHeight
     }, true)
-    m.buttonPrevious.update({
+    buttonPrevious.update({
         minWidth: buttonWidth,
         height: buttonHeight
     }, true)
-    m.buttonSlideShow.update({
+    buttonSlideShow.update({
         minWidth: buttonWidth,
         height: buttonHeight
     }, true)
+
+    m._photoArray = rawPhoto()
+    m._colorsArray = rawColors()
+
+    m._poster.setField("uri", m._photoArray[0])
+
+    m._buttons = [buttonSlideShow, buttonNext, buttonPrevious]
+    m._rectangles = [rectangleOne, rectangleTwo, rectangleThree, rectangleFour]
+
+    m._currentButton = 2
+    m._currentPhoto = 0
+    m.top.observeFieldScoped("focusedChild" , "_onFocusedChild")
 end sub
 
-sub onPreviousButtonSelected()
-    m.timer.control = "stop"
-    m.currentPhoto = m.currentPhoto - 1
-    if m.currentPhoto = -1
-        m.currentPhoto = m.photoArray.Count() - 1
-    end if
-    m.poster.uri = m.photoArray[m.currentPhoto]
+sub _onFocusedChild()
+    if m.top.hasFocus() then m._buttons[m._currentButton].setFocus(true)
 end sub
 
-sub onNextButtonSelected()
-    m.timer.control = "stop"
-    m.currentPhoto = m.currentPhoto + 1
-    if m.currentPhoto >= m.photoArray.Count()
-        m.currentPhoto = 0
-    end if
-    m.poster.uri = m.photoArray[m.currentPhoto]
+sub _onPreviousButtonSelected()
+    m._timer.control = "stop"
+    m._currentPhoto = m._currentPhoto - 1
+    if m._currentPhoto = -1 then m._currentPhoto = m._photoArray.Count() - 1
+    m._poster.uri = m._photoArray[m._currentPhoto]
 end sub
 
-sub onSlideShowButtonSelected()
-    m.timer.control = "start"
+sub _onNextButtonSelected()
+    m._timer.control = "stop"
+    m._currentPhoto = m._currentPhoto + 1
+    if m._currentPhoto >= m._photoArray.Count() then m._currentPhoto = 0
+    m._poster.uri = m._photoArray[m._currentPhoto]
 end sub
 
-sub onFirePhotoChanges()
-    m.currentPhoto = m.currentPhoto + 1
-    if m.currentPhoto = m.photoArray.Count()
-        m.currentPhoto = 0
-    end if
-    m.poster.uri = m.photoArray[m.currentPhoto]
-    for each rectangle in m.rectangles
-        random = Rnd(m.colorsArray.Count())
-        if random = m.colorsArray.Count()
-            random = 0
-        end if
-        rectangle.color = m.colorsArray[random]
+sub _onSlideShowButtonSelected()
+    m._timer.control = "start"
+end sub
+
+sub _onFirePhotoChanges()
+    m._currentPhoto = m._currentPhoto + 1
+    if m._currentPhoto = m._photoArray.Count() then m._currentPhoto = 0
+    m._poster.uri = m._photoArray[m._currentPhoto]
+    for each rectangle in m._rectangles
+        random = Rnd(m._colorsArray.Count())
+        if random = m._colorsArray.Count() then random = 0
+        rectangle.color = m._colorsArray[random]
     end for
 end sub
 
@@ -124,14 +112,14 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
     result = false
     if press 
         if key = "up"
-            if NOT m.currentButton = 2
-                m.currentButton = m.currentButton + 1
-                m.buttons[m.currentButton].setFocus(true)
+            if NOT m._currentButton = 2
+                m._currentButton = m._currentButton + 1
+                m._buttons[m._currentButton].setFocus(true)
             end if
         else if key = "down"
-            if NOT m.currentButton = 0
-                m.currentButton = m.currentButton - 1
-                m.buttons[m.currentButton].setFocus(true)
+            if NOT m._currentButton = 0
+                m._currentButton = m._currentButton - 1
+                m._buttons[m._currentButton].setFocus(true)
             end if
         end if
     end if

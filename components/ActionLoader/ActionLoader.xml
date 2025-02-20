@@ -1,6 +1,4 @@
-<component name="ActionLoader" extends = "Group">
-    <script type="text/brightscript" uri="ActionLoader.brs" />
-    
+<component name="ActionLoader" extends = "Group">  
     <children>
 
         <LayoutGroup
@@ -112,4 +110,6 @@
             </Animation>
         </SequentialAnimation>
     </children>
+
+    <script type="text/brightscript" uri="ActionLoader.brs" />
 </component>

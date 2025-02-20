@@ -1,6 +1,8 @@
-<component name="ContentListView" extends = "Group" initialFocus  = "rowList">
-    <script type="text/brightscript" uri="ContentListView.brs"/>
-    <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
+<component name="ContentListView" extends = "Group">
+    <interface>
+        <field id="isLoading" type="boolean" />
+    </interface>
+    
     <children>
         <LayoutGroup
             layoutDirection = "vert"
@@ -12,7 +14,7 @@
                 layoutDirection = "horiz"
                 itemSpacings = "[10]">
                     <Poster
-                    id = "photoPoster"
+                    id = "poster"
                     loadDisplayMode = "scaleToFit"
                     loadWidth = "950"
                     loadHeight = "530"/>
@@ -20,7 +22,7 @@
                         layoutDirection = "vert"
                         itemSpacings = "[20]">
                         <Label
-                        id = "titleText"
+                        id = "title"
                         maxLines = "2"
                         wrap = "true"
                         font = "font:LargeSystemFont"/>
@@ -29,7 +31,7 @@
                             color = "0xffffffff"
                             height = "2"/>
                         <Label
-                        id = "descriptionText"
+                        id = "description"
                         wrap = "true"/>
                             <layoutGroup
                                 layoutDirection = "horiz"
@@ -60,4 +62,7 @@
             </LayoutGroup>
         </LayoutGroup>
     </children>
+
+    <script type="text/brightscript" uri="ContentListView.brs"/>
+    <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
 </component>

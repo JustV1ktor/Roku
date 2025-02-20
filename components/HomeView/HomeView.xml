@@ -1,9 +1,10 @@
 <component name="HomeView" extends="Group">
-    <script type="text/brightscript" uri="HomeView.brs" />
-
     <interface>
         <field id="userData" type="assocarray"/>
-        <field id="showNextView" type="boolean"/>
+        <field id="showContentListView" type="boolean"/>
+        <field id="showCustomKeyGridView" type="boolean" />
+        <field id="showSlideShowView" type="boolean" />
+        <field id="isLoading" type="boolean" />
         <field id="isUserLogedOut" type="boolean" />
     </interface>
 
@@ -33,17 +34,35 @@
             <LayoutGroup
                 layoutDirection = "horiz">
                 <Label
+                    text = "Your email is: "/>
+                <Label
+                    id = "userEmail"/>
+            </LayoutGroup>
+            <LayoutGroup
+                layoutDirection = "horiz">
+                <Label
                     text = "Your Password is: "/>
                 <TextEditBox
                     secureMode = "true"
                     id = "userPassword"/>
             </LayoutGroup>
-            <Button
-                text = "show Content list"
-                id = "showNextView"/>
-            <Button
-                text = "Log out of account"
-                id = "logOut"/>
+            <LayoutGroup
+                id = "buttonGroup">
+                <Button
+                    text = "show Content list"
+                    id = "buttonShowContentListView"/>
+                <Button
+                    text = "show CustomKey Grid"
+                    id = "buttonShowCustomKeyGridView"/>
+                <Button
+                    text = "show Slide Show"
+                    id = "buttonShowSlideShowView"/>
+                <Button
+                    text = "Log out of account"
+                    id = "buttonLogOut"/>
+            </LayoutGroup>
         </LayoutGroup>
     </children>
+
+    <script type="text/brightscript" uri="HomeView.brs" />
 </component>

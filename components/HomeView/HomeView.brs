@@ -1,41 +1,60 @@
 sub init()
-    findAndPopulate()
+    _findAndPopulate()
 end sub
 
-sub findAndPopulate()
-    m.userName = m.top.findNode("userName")
-    m.userNickName = m.top.findNode("userNickName")
-    m.userPassword = m.top.findNode("userPassword")
-    m.showNextViewButton = m.top.findNode("showNextView")
-    m.onlogOutButton = m.top.findNode("logOut")
+sub _findAndPopulate()
+    m.top.isLoading = false
+    m._userName = m.top.findNode("userName")
+    m._userNickName = m.top.findNode("userNickName")
+    m._userPassword = m.top.findNode("userPassword")
+    m._userEmail = m.top.findNode("userEmail")
 
-    m.showNextViewButton.observeFieldScoped("buttonSelected", "showNextView")
-    m.onlogOutButton.observeFieldScoped("buttonSelected", "onLogOut")
-    m.top.observeFieldScoped("userData", "Populate")
+    buttonShowContentListView = m.top.findNode("buttonShowContentListView")
+    buttonShowCustomKeyGridView = m.top.findNode("buttonShowCustomKeyGridView")
+    buttonShowSlideShowView = m.top.findNode("buttonShowSlideShowView")
+    buttonLogOut = m.top.findNode("buttonLogOut")
+    m._buttonGroup = m.top.findNode("buttonGroup")
 
-	m.top.observeFieldScoped("focusedChild" , "onFocusedChild")
+    buttonShowContentListView.observeFieldScoped("buttonSelected", "_onButtonShowContentListView")
+    buttonShowCustomKeyGridView.observeFieldScoped("buttonSelected", "_onButtonShowCustomKeyGridView")
+    buttonShowSlideShowView.observeFieldScoped("buttonSelected", "_onButtonShowSlideShowView")
+    buttonLogOut.observeFieldScoped("buttonSelected", "_onButtonLogOut")
+    m.top.observeFieldScoped("userData", "_populateUserData")
+
+    m._currentButton = 0
+
+    m.top.observeFieldScoped("focusedChild" , "_onFocusedChild")
 end sub
 
-sub onFocusedChild()
-    if m.top.hasFocus() then m.showNextViewButton.setFocus(true)
+sub _onFocusedChild()
+    if m.top.hasFocus() then m._buttonGroup.getChild(m._currentButton).setFocus(true)
 end sub
 
-sub Populate()
-    m.userName.text = m.top.userData.userName
-    m.userNickName.text = m.top.userData.userNickName
-    m.userPassword.text = m.top.userData.userPassword
+sub _populateUserData()
+    m._userName.text = m.top.userData.userName
+    m._userNickName.text = m.top.userData.userNickName
+    m._userPassword.text = m.top.userData.userPassword
+    m._userEmail.text = m.top.userData.userEmail
 end sub
 
-sub showNextView()
-    m.top.showNextView = true
+sub _onButtonShowContentListView()
+    m.top.showContentListView = true
 end sub
 
-sub onLogOut()
-    m.sec = CreateObject("roRegistrySection", "userData")
+sub _onButtonShowCustomKeyGridView()
+    m.top.showCustomKeyGridView = true
+end sub
 
-    m.sec.Delete("userName")
-    m.sec.Delete("userNickName")
-    m.sec.Delete("userPassword")
+sub _onButtonShowSlideShowView()
+    m.top.showSlideShowView = true
+end sub
+
+sub _onButtonLogOut()
+    sec = CreateObject("roRegistrySection", "userData")
+
+    sec.Delete("userName")
+    sec.Delete("userNickName")
+    sec.Delete("userPassword")
 
     m.top.isUserLogedOut = true
 end sub
@@ -44,12 +63,15 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
     result = false
     if press 
         if key = "up"
-            m.showNextViewButton.setFocus(true)
+            m._currentButton--
+            if m._currentButton = -1 then m._currentButton = m._buttonGroup.getChildCount() - 1
             result = true
         else if key = "down"
-            m.onlogOutButton.setFocus(true)
+            m._currentButton++
+            if m._currentButton = m._buttonGroup.getChildCount() then m._currentButton = 0
             result = true
         end if
+        m._buttonGroup.getChild(m._currentButton).setFocus(true)
     end if
     return result
 end function
