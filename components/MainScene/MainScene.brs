@@ -1,10 +1,10 @@
 sub init()
     m.top.ComponentController = m.top.findNode("ComponentController")
     m._sec = CreateObject("roRegistrySection", "userData")
-    if m._sec.Exists("userName") then _showHomeView() else _ShowAuthorizationView()
+    if m._sec.Exists("userName") then _showHomeView() else _showAuthorizationView()
 end sub
 
-sub _ShowAuthorizationView()
+sub _showAuthorizationView()
     m._AuthorizationView = CreateObject("roSGNode", "AuthorizationView")
 
     m._AuthorizationView.observeFieldScoped("isLoginSuccess", "_showHomeView")
@@ -31,9 +31,10 @@ sub _showHomeView()
     }
 
     m._homeView.observeFieldScoped("showContentListView", "_showContentListView")
+    m._homeView.observeFieldScoped("showPlayerScreenView", "_showShowPlayerScreenView")
     m._homeView.observeFieldScoped("showCustomKeyGridView", "_showCustomKeyGridView")
     m._homeView.observeFieldScoped("showSlideShowView", "_showSlideShowView")
-    m._homeView.observeFieldScoped("isUserLogedOut", "_ShowAuthorizationView")
+    m._homeView.observeFieldScoped("isUserLogedOut", "_showAuthorizationView")
 
     m.top.ComponentController.callFunc("show", {
         view: m._homeView
@@ -48,6 +49,17 @@ sub _showContentListView()
 
     m.top.ComponentController.callFunc("show", {
         view: contentListView
+    })
+end sub
+
+sub _showShowPlayerScreenView()
+    m._homeView.showPlayerScreenView = false
+    playerScreenView = CreateObject("roSGNode", "PlayerScreenView")
+
+    playerScreenView.observeFieldScoped("isLoading", "_showActionLoader")
+
+    m.top.ComponentController.callFunc("show", {
+        view: playerScreenView
     })
 end sub
 

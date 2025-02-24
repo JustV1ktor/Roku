@@ -83,7 +83,7 @@ sub _setResponse()
     end if 
 end sub
 
-sub _onButtonDialogPressed(event)
+sub _onButtonDialogSelected(event)
     if event.getData() = 0
         if m._mainArea.getChild(m._currentElement).id = "emailTextEditBox"
             m._emailTextEditBox.text = m._keyBoard.text
@@ -119,7 +119,7 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
                 m._keyBoard.message = [messageText]
                 m._keyBoard.buttons = ["OK", "cancel"]
 
-                m._keyBoard.observeFieldScoped("buttonSelected", "_onButtonDialogPressed")
+                m._keyBoard.observeFieldScoped("buttonSelected", "_onButtonDialogSelected")
 
                 m._scene.dialog = m._keyBoard
             end if

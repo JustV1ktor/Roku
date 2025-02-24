@@ -10,15 +10,17 @@ sub _findAndPopulate()
     m._userEmail = m.top.findNode("userEmail")
 
     buttonShowContentListView = m.top.findNode("buttonShowContentListView")
+    buttonShowPlayerScreenView = m.top.findNode("buttonShowPlayerScreenView")
     buttonShowCustomKeyGridView = m.top.findNode("buttonShowCustomKeyGridView")
     buttonShowSlideShowView = m.top.findNode("buttonShowSlideShowView")
     buttonLogOut = m.top.findNode("buttonLogOut")
     m._buttonGroup = m.top.findNode("buttonGroup")
 
-    buttonShowContentListView.observeFieldScoped("buttonSelected", "_onButtonShowContentListView")
-    buttonShowCustomKeyGridView.observeFieldScoped("buttonSelected", "_onButtonShowCustomKeyGridView")
-    buttonShowSlideShowView.observeFieldScoped("buttonSelected", "_onButtonShowSlideShowView")
-    buttonLogOut.observeFieldScoped("buttonSelected", "_onButtonLogOut")
+    buttonShowContentListView.observeFieldScoped("buttonSelected", "_onButtonShowContentListViewSelected")
+    buttonShowPlayerScreenView.observeFieldScoped("buttonSelected", "_onButtonShowPlayerScreenViewSelected")
+    buttonShowCustomKeyGridView.observeFieldScoped("buttonSelected", "_onButtonShowCustomKeyGridViewSelected")
+    buttonShowSlideShowView.observeFieldScoped("buttonSelected", "_onButtonShowSlideShowViewSelected")
+    buttonLogOut.observeFieldScoped("buttonSelected", "_onButtonLogOutSelected")
     m.top.observeFieldScoped("userData", "_populateUserData")
 
     m._currentButton = 0
@@ -37,19 +39,23 @@ sub _populateUserData()
     m._userEmail.text = m.top.userData.userEmail
 end sub
 
-sub _onButtonShowContentListView()
+sub _onButtonShowContentListViewSelected()
     m.top.showContentListView = true
 end sub
 
-sub _onButtonShowCustomKeyGridView()
+sub _onButtonShowPlayerScreenViewSelected()
+    m.top.showPlayerScreenView = true
+end sub
+
+sub _onButtonShowCustomKeyGridViewSelected()
     m.top.showCustomKeyGridView = true
 end sub
 
-sub _onButtonShowSlideShowView()
+sub _onButtonShowSlideShowViewSelected()
     m.top.showSlideShowView = true
 end sub
 
-sub _onButtonLogOut()
+sub _onButtonLogOutSelected()
     sec = CreateObject("roRegistrySection", "userData")
 
     sec.Delete("userName")

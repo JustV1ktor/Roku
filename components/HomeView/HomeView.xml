@@ -4,6 +4,7 @@
         <field id="showContentListView" type="boolean"/>
         <field id="showCustomKeyGridView" type="boolean" />
         <field id="showSlideShowView" type="boolean" />
+        <field id="showPlayerScreenView" type="boolean" />
         <field id="isLoading" type="boolean" />
         <field id="isUserLogedOut" type="boolean" />
     </interface>
@@ -51,6 +52,9 @@
                 <Button
                     text = "show Content list"
                     id = "buttonShowContentListView"/>
+                <Button
+                    text = "show Player Screen"
+                    id = "buttonShowPlayerScreenView"/>
                 <Button
                     text = "show CustomKey Grid"
                     id = "buttonShowCustomKeyGridView"/>

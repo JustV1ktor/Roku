@@ -1,0 +1,77 @@
+<component name="PlayerScreenView" extends="Group">
+    <children>
+        <Video
+            id = "videoPlayer"/>
+        <Rectangle
+            id = "progressBar"
+            translation = "[60,900]"
+            width = "1800"
+            height = "30"
+            color = "0xffffff77"
+            blendingEnabled = "false"/>
+        <Rectangle
+            id = "progression"
+            translation = "[60,900]"
+            height = "30"
+            color = "0x6f1ab1"
+            blendingEnabled = "false"/>
+        <Rectangle
+            id = "dot"
+            translation = "[60,900]"
+            width = "30"
+            height = "30"
+            color = "0xffffffff"
+            blendingEnabled = "false"/>
+        <LayoutGroup
+            id = "controlGradient"
+            translation = "[960, 926]"
+            horizAlignment = "center"
+            vertAlignment = "center">
+            <Poster
+                height = "400"
+                width = "1940"
+                uri = "pkg:/images/black-gradient-png--MFj4tv.png"/>
+        </LayoutGroup>
+        <LayoutGroup
+            translation = "[960, 1000]"
+            horizAlignment = "center"
+            vertAlignment = "center"
+            layoutDirection = "horiz"
+            itemSpacings = "[1700]">
+            <Label
+                id = "position"/>
+            <Label
+                id = "duration"/>
+        </LayoutGroup>
+        <LayoutGroup
+            id = "buttonGroup"
+            translation = "[960, 1000]"
+            horizAlignment = "center"
+            vertAlignment = "center"
+            layoutDirection = "horiz"
+            itemSpacings = "[10]">
+            <CustomButton
+                id = "restart"
+                uri = "pkg:/images/startOver.png"
+                width = "100"
+                height = "100"/>
+            <CustomButton
+                id = "fastRewind"
+                uri = "pkg:/images/fastRewind.png"
+                width = "100"
+                height = "100"/>
+            <CustomButton
+                id = "pauseAndResume"
+                uri = "pkg:/images/pause.png"
+                width = "100"
+                height = "100"/>
+            <CustomButton
+                id = "fastForward"
+                uri = "pkg:/images/fastForward.png"
+                width = "100"
+                height = "100"/>
+        </LayoutGroup>   
+    </children>
+
+    <script type="text/brightscript" uri="PlayerScreenView.brs" />
+</component>
