@@ -12,7 +12,7 @@ sub _findAndPopulate()
     m._progressBar = m.top.findNode("progressBar")
     m._progression = m.top.findNode("progression")
     m._dot = m.top.findNode("dot")
-    m._controlGradient = m.top.findNode("controlGradient")
+    m._backGroundGradient = m.top.findNode("backGroundGradient")
 
     m._buttonRestart = m.top.findNode("restart")
     m._buttonFastRewind = m.top.findNode("fastRewind")
@@ -38,6 +38,7 @@ sub _findAndPopulate()
     m._videoPlayer.observeFieldScoped("position", "_showPosition")
 
     m._currentButton = 0
+    m._currentRow = 2
     m.top.observeFieldScoped("focusedChild" , "_onFocusedChild")
 end sub
 
@@ -47,6 +48,7 @@ end sub
 
 sub _onButtonRestartSelected()
     m._videoPlayer.seek = 0.0
+    m._videoPlayer.position = 0.0
     m._buttonPauseAndResume.uri = "pkg:/images/pause.png"
     m._videoPlayer.control = "resume"
 end sub
@@ -58,16 +60,17 @@ sub _onButtonFastRewindSelected()
         result = 0
     end if 
     m._videoPlayer.seek = result
+    m._videoPlayer.position = result
     m._videoPlayer.control = "pause"
     m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
 end sub
 
 sub _onButtonPauseAndResumeSelected()
     if m._videoPlayer.control = "resume" or m._videoPlayer.control = "play"
-        m._buttonPauseAndResume.uri = "pkg:/images/resumeFocused.png"
+        m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
         m._videoPlayer.control = "pause"
     else if m._videoPlayer.control = "pause"
-        m._buttonPauseAndResume.uri = "pkg:/images/pauseFocused.png"
+        m._buttonPauseAndResume.uri = "pkg:/images/pause.png"
         m._videoPlayer.control = "resume"
     end if
 end sub
@@ -76,50 +79,55 @@ sub _onButtonFastForwardSelected()
     seconds = m._videoPlayer.position.toStr().split(".")[0]
     result = seconds.toFloat() + 5.0
     if result > m._videoPlayer.duration
-        result = m._videoPlayer.duration - 1
+        result = m._videoPlayer.duration
     end if 
     m._videoPlayer.seek = result
+    m._videoPlayer.position = result
     m._videoPlayer.control = "pause"
     m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
 end sub
 
 sub _buttonRestartFocused()
-    if type(m._buttonRestart.focusedChild).toStr() = "roSGNode"
-        m._buttonRestart.uri = "pkg:/images/startOverFocused.png"
-    else if type(m._buttonRestart.focusedChild).toStr() = "roInvalid"
-        m._buttonRestart.uri = "pkg:/images/startOver.png"
+    if m._buttonRestart.hasfocus() = true
+        m._buttonRestart.blendColor = "0xffffffff"
+    else if m._buttonRestart.hasfocus() = false
+        m._buttonRestart.blendColor = "0xffffff33"
     end if
 end sub
 
 sub _buttonFastRewindFocused()
-    if type(m._buttonFastRewind.focusedChild).toStr() = "roSGNode"
-        m._buttonFastRewind.uri = "pkg:/images/fastRewindFocused.png"
-    else if type(m._buttonFastRewind.focusedChild).toStr() = "roInvalid"
-        m._buttonFastRewind.uri = "pkg:/images/fastRewind.png"
+    if m._buttonFastRewind.hasfocus() = true
+        m._buttonFastRewind.blendColor = "0xffffffff"
+    else if m._buttonFastRewind.hasfocus() = false
+        m._buttonFastRewind.blendColor = "0xffffff33"
     end if
 end sub
 
 sub _buttonPauseAndResumeFocused()
-    if type(m._buttonPauseAndResume.focusedChild).toStr() = "roSGNode"
-        if m._videoPlayer.control = "resume" or m._videoPlayer.control = "play"
-            m._buttonPauseAndResume.uri = "pkg:/images/pauseFocused.png"
-        else if m._videoPlayer.control = "pause"
-            m._buttonPauseAndResume.uri = "pkg:/images/resumeFocused.png"
-        end if
-    else if type(m._buttonPauseAndResume.focusedChild).toStr() = "roInvalid"
+    if m._buttonPauseAndResume.hasfocus() = true
         if m._videoPlayer.control = "resume" or m._videoPlayer.control = "play"
             m._buttonPauseAndResume.uri = "pkg:/images/pause.png"
+            m._buttonPauseAndResume.blendColor = "0xffffffff"
         else if m._videoPlayer.control = "pause"
             m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
+            m._buttonPauseAndResume.blendColor = "0xffffffff"
+        end if
+    else if m._buttonPauseAndResume.hasfocus() = false
+        if m._videoPlayer.control = "resume" or m._videoPlayer.control = "play"
+            m._buttonPauseAndResume.uri = "pkg:/images/pause.png"
+            m._buttonPauseAndResume.blendColor = "0xffffff33"
+        else if m._videoPlayer.control = "pause"
+            m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
+            m._buttonPauseAndResume.blendColor = "0xffffff33"
         end if
     end if
 end sub
 
 sub _buttonFastForwardFocused()
-    if type(m._buttonFastForward.focusedChild).toStr() = "roSGNode"
-        m._buttonFastForward.uri = "pkg:/images/fastForwardFocused.png"
-    else if type(m._buttonFastForward.focusedChild).toStr() = "roInvalid"
-        m._buttonFastForward.uri = "pkg:/images/fastForward.png"
+    if m._buttonFastForward.hasfocus() = true
+        m._buttonFastForward.blendColor = "0xffffffff"
+    else if m._buttonFastForward.hasfocus() = false
+        m._buttonFastForward.blendColor = "0xffffff33"
     end if
 end sub
 
@@ -153,34 +161,61 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
     result = false
     if press 
         if key = "up"
-            m._progressBar.visible = "false"
-            m._progression.visible = "false"
-            m._dot.visible = "false"
-            m._buttonGroup.visible = "false"
-            m._controlGradient.visible = "false"
-            m._position.visible = "false"
-            m._duration.visible = "false"
+            m._currentRow--
 
+            if m._currentRow < 0 then m._currentRow = 0
+
+            if m._currentRow = 0
+                m._duration.setFocus(true)
+                m._progressBar.visible = "false"
+                m._progression.visible = "false"
+                m._dot.visible = "false"
+                m._buttonGroup.visible = "false"
+                m._backGroundGradient.visible = "false"
+                m._position.visible = "false"
+                m._duration.visible = "false"
+            else if m._currentRow = 1
+                m._dot.setFocus(true)
+                m._dot.color = "0xff00ffff"
+            end if
             result = true
         else if key = "down"
-            m._progressBar.visible = "true"
-            m._progression.visible = "true"
-            m._dot.visible = "true"
-            m._buttonGroup.visible = "true"
-            m._controlGradient.visible = "true"
-            m._position.visible = "true"
-            m._duration.visible = "true"
+            m._currentRow++
+
+            if m._currentRow > 2 then m._currentRow = 2
+
+            if m._currentRow = 1
+                m._dot.setFocus(true)
+                m._progressBar.visible = "true"
+                m._progression.visible = "true"
+                m._dot.visible = "true"
+                m._buttonGroup.visible = "true"
+                m._backGroundGradient.visible = "true"
+                m._position.visible = "true"
+                m._duration.visible = "true"
+            else if m._currentRow = 2
+                m._buttonGroup.getChild(m._currentButton).setFocus(true)
+                m._dot.color = "0xffffffff"
+            end if
 
             result = true
         else if key = "left"
-            m._currentButton--
-            if m._currentButton = -1 then m._currentButton = 3
-            m._buttonGroup.getChild(m._currentButton).setFocus(true)
+            if m._dot.hasFocus() = true 
+                _onButtonFastRewindSelected()
+            else
+                m._currentButton--
+                if m._currentButton = -1 then m._currentButton = 3
+                m._buttonGroup.getChild(m._currentButton).setFocus(true)
+            end if
             result = true
         else if key = "right"
-            m._currentButton++
-            if m._currentButton = 4 then m._currentButton = 0
-            m._buttonGroup.getChild(m._currentButton).setFocus(true)
+            if m._dot.hasFocus() = true 
+                _onButtonFastForwardSelected()
+            else
+                m._currentButton++
+                if m._currentButton = 4 then m._currentButton = 0
+                m._buttonGroup.getChild(m._currentButton).setFocus(true)
+            end if
             result = true
         end if
     end if

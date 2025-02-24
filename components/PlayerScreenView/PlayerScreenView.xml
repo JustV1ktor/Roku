@@ -7,7 +7,7 @@
             translation = "[60,900]"
             width = "1800"
             height = "30"
-            color = "0xffffff77"
+            color = "0xffffff11"
             blendingEnabled = "false"/>
         <Rectangle
             id = "progression"
@@ -23,7 +23,7 @@
             color = "0xffffffff"
             blendingEnabled = "false"/>
         <LayoutGroup
-            id = "controlGradient"
+            id = "backGroundGradient"
             translation = "[960, 926]"
             horizAlignment = "center"
             vertAlignment = "center">
@@ -54,22 +54,26 @@
                 id = "restart"
                 uri = "pkg:/images/startOver.png"
                 width = "100"
-                height = "100"/>
+                height = "100"
+                blendColor = "0xffffff33"/>
             <CustomButton
                 id = "fastRewind"
                 uri = "pkg:/images/fastRewind.png"
                 width = "100"
-                height = "100"/>
+                height = "100"
+                blendColor = "0xffffff33"/>
             <CustomButton
                 id = "pauseAndResume"
                 uri = "pkg:/images/pause.png"
                 width = "100"
-                height = "100"/>
+                height = "100"
+                blendColor = "0xffffff33"/>
             <CustomButton
                 id = "fastForward"
                 uri = "pkg:/images/fastForward.png"
                 width = "100"
-                height = "100"/>
+                height = "100"
+                blendColor = "0xffffff33"/>
         </LayoutGroup>   
     </children>
 
