@@ -1,15 +1,15 @@
 <component name="RowListItem" extends = "Group">
-    <script type="text/brightscript" uri="RowListItem.brs"/>
-
     <interface> 
-        <field id = "itemContent" type = "node" onChange = "showContent"/>
+        <field id = "itemContent" type = "node" onChange = "onitemContentPopulate"/>
     </interface>
     
     <children>
         <Poster
-            id = "itemPoster"
+            id = "poster"
             loadDisplayMode = "scaleToFit"
             loadWidth = "265"
             loadHeight = "400"/>
     </children>
+
+    <script type="text/brightscript" uri="RowListItem.brs"/>
 </component>

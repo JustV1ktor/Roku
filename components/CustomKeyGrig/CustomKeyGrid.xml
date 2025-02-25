@@ -1,13 +1,19 @@
 <component name="CustomKeyGrid" extends="Group">
-    <script type="text/brightscript" uri="CustomKeyGrid.brs" />
-
     <children>
         <LayoutGroup
-            id = "mainArea"
             translation = "[960, 540]"
             horizAlignment = "center"
-            vertAlignment = "center"
-            layoutDirection = "vert">
+            vertAlignment = "center">
+            <TextEditBox
+                id = "textEditBox"/>
+            <LayoutGroup
+                id = "customKeyArea"
+                horizAlignment = "center"
+                layoutDirection = "vert">
+            </LayoutGroup>
         </LayoutGroup>  
     </children>
+
+    <script type="text/brightscript" uri="CustomKeyGrid.brs" />
+    <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs" />
 </component>

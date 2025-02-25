@@ -22,7 +22,7 @@ sub getcontent()
     while true
         message = Wait(3000, port)
         mt = type(message)
-		if mt="roUrlEvent"
+        if mt="roUrlEvent"
             responseCode = message.getResponseCode()
             if responseCode = 200
                 responseString = message.getString()
@@ -40,11 +40,7 @@ sub getcontent()
                     itemcontent.addField("releaseDate", "string", false)
                     itemcontent.addField("averageRating", "float", false)
 
-                    if item.backdrop_path = invalid
-                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w500" + item.poster_path
-                    else 
-                        itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w500" + item.backdrop_path
-                    end if
+                    if item.backdrop_path = invalid then itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w500" + item.poster_path else itemcontent.HDPosterUrl = "https://image.tmdb.org/t/p/w500" + item.backdrop_path
 
                     itemcontent.setFields({
                         title: item.original_title,

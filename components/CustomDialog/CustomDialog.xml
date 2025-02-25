@@ -1,10 +1,8 @@
 <component name= "CustomDialog" extends = "Group">
-    <script type="text/brightscript" uri="CustomDialog.brs"/>
-
     <interface>
         <field id = "title" type = "string" alias = "title.text"/>
         <field id = "description" type = "string" alias = "description.text"/>
-        <field id = "buttonsText" type = "stringarray" onChange = "setButtonsDialog"/>
+        <field id = "buttonsText" type = "stringarray" onChange = "setElements"/>
         <field id = "action" type = "string"/>
     </interface>
 
@@ -29,7 +27,8 @@
         <LayoutGroup
             id = "backGroundLayout"
             horizAlignment = "center"
-            vertAlignment = "center">
+            vertAlignment = "center"
+            translation = "[960, 540]">
             <Rectangle
                 id = "backGroundDialog"
                 color = "0x888888ff"/>
@@ -80,4 +79,6 @@
             </LayoutGroup>
         </LayoutGroup>
     </children>
+
+    <script type="text/brightscript" uri="CustomDialog.brs"/>
 </component>

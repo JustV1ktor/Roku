@@ -1,9 +1,7 @@
 <component name="AuthorizationView" extends="Group">
-    <script type="text/brightscript" uri="AuthorizationView.brs" />
-    <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
-
     <interface>
         <field id="isLoginSuccess" type="boolean" />
+        <field id="isLoading" type="boolean" />
     </interface>
     
     <children>
@@ -24,8 +22,11 @@
                 secureMode = "true"
                 clearOnDownKey = "false"/>
             <Button
-                id = "userAuthorization"
+                id = "buttonAuthorization"
                 text = "sign in!"/>
         </LayoutGroup>
     </children>
+
+    <script type="text/brightscript" uri="AuthorizationView.brs" />
+    <script type="text/brightscript" uri="../ActionResponse/ActionResponse.brs"/>
 </component>

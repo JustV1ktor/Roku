@@ -1,51 +1,51 @@
 sub init()
-    findAndPopulate()
+    _findAndPopulate()
 end sub
 
-sub findAndPopulate()
-    firstRectangleAnimation = m.top.FindNode("firstRectangleAnimation")
-    m.secondRectangleAnimation = m.top.FindNode("secondRectangleAnimation")
-    m.thirdRectangleAnimation = m.top.FindNode("thirdRectangleAnimation")
-    m.fourthRectangleAnimation = m.top.FindNode("fourthRectangleAnimation")
-    m.fifthRectangleAnimation = m.top.FindNode("fifthRectangleAnimation")
+sub _findAndPopulate()
+    firstRectangleAnimation = m.top.findNode("firstRectangleAnimation")
+    m._secondRectangleAnimation = m.top.findNode("secondRectangleAnimation")
+    m._thirdRectangleAnimation = m.top.findNode("thirdRectangleAnimation")
+    m._fourthRectangleAnimation = m.top.findNode("fourthRectangleAnimation")
+    m._fifthRectangleAnimation = m.top.findNode("fifthRectangleAnimation")
 
     firstRectangleAnimation.control = "start"
 
-    m.secondAnimationStartTimer = CreateObject("roSGNode", "timer")
-    m.thirdAnimationStartTimer = CreateObject("roSGNode", "timer")
-    m.fourthAnimationStartTimer = CreateObject("roSGNode", "timer")
-    m.fifthAnimationStartTimer = CreateObject("roSGNode", "timer")
+    m._secondAnimationStartTimer = CreateObject("roSGNode", "timer")
+    m._thirdAnimationStartTimer = CreateObject("roSGNode", "timer")
+    m._fourthAnimationStartTimer = CreateObject("roSGNode", "timer")
+    m._fifthAnimationStartTimer = CreateObject("roSGNode", "timer")
 
-    m.secondAnimationStartTimer.duration = 0.3
-    m.thirdAnimationStartTimer.duration = 0.6
-    m.fourthAnimationStartTimer.duration = 0.9
-    m.fifthAnimationStartTimer.duration = 1.2
+    m._secondAnimationStartTimer.duration = 0.3
+    m._thirdAnimationStartTimer.duration = 0.6
+    m._fourthAnimationStartTimer.duration = 0.9
+    m._fifthAnimationStartTimer.duration = 1.2
 
-    m.secondAnimationStartTimer.observeFieldScoped("fire", "secondAnimationStart")
-    m.thirdAnimationStartTimer.observeField("fire", "thirdAnimationStart")
-    m.fourthAnimationStartTimer.observeField("fire", "fourthAnimationStart")
-    m.fifthAnimationStartTimer.observeField("fire", "fifthAnimationStart")
+    m._secondAnimationStartTimer.observeFieldScoped("fire", "_secondAnimationStart")
+    m._thirdAnimationStartTimer.observeFieldScoped("fire", "_thirdAnimationStart")
+    m._fourthAnimationStartTimer.observeFieldScoped("fire", "_fourthAnimationStart")
+    m._fifthAnimationStartTimer.observeFieldScoped("fire", "_fifthAnimationStart")
 
-    m.secondAnimationStartTimer.control = "start"
-    m.thirdAnimationStartTimer.control = "start"
-    m.fourthAnimationStartTimer.control = "start"
-    m.fifthAnimationStartTimer.control = "start"
+    m._secondAnimationStartTimer.control = "start"
+    m._thirdAnimationStartTimer.control = "start"
+    m._fourthAnimationStartTimer.control = "start"
+    m._fifthAnimationStartTimer.control = "start"
 
     m.top.setFocus(true)
 end sub
 
-sub secondAnimationStart()
-    m.secondRectangleAnimation.control = "start"
+sub _secondAnimationStart()
+    m._secondRectangleAnimation.control = "start"
 end sub
 
-sub thirdAnimationStart()
-    m.thirdRectangleAnimation.control = "start"
+sub _thirdAnimationStart()
+    m._thirdRectangleAnimation.control = "start"
 end sub
 
-sub fourthAnimationStart()
-    m.fourthRectangleAnimation.control = "start"
+sub _fourthAnimationStart()
+    m._fourthRectangleAnimation.control = "start"
 end sub
 
-sub fifthAnimationStart()
-    m.fifthRectangleAnimation.control = "start"
+sub _fifthAnimationStart()
+    m._fifthRectangleAnimation.control = "start"
 end sub

@@ -1,136 +1,89 @@
 sub init()
-    setKeys()
+    _findAndPopulate()
 end sub
 
-sub setKeys()
-    m.mainArea = m.top.findNode("mainArea")
-    m.arrayKeysText = ["1","2","3","4","5","6","7","8","9","0","a","v","q","w","u","r","g","d","A"]
+sub _findAndPopulate()
+    m._customKeyArea = m.top.findNode("customKeyArea")
+    m._textEditBox = m.top.findNode("textEditBox")
+    arrayKeysText = ["1","2","3","4","5","6","7","8","9","0","a","v","q","w","u","r","g","d","A","Clear","Space","Enter"]
     
-    m.rowButtonsLength = 4
+    m._rowButtonsLength = 4
 
-    m.currentRow = 0
-    m.currentColumn = 0
+    m._currentRow = 0
+    m._currentColumn = 0
 
-    m.numRows = 0
+    numRows = 0
     numButtons = 0
 
-    m.mainArea.createChild("LayoutGroup")
-    m.mainArea.getChild(m.numRows).layoutDirection = "horiz"
+    m._customKeyArea.createChild("LayoutGroup")
+    m._customKeyArea.getChild(numRows).layoutDirection = "horiz"
 
-    for each item in m.arrayKeysText
-        if m.mainArea.getChild(m.numRows).getChildCount() = m.rowButtonsLength
-            m.mainArea.createChild("LayoutGroup")
-            m.numRows++
-            m.mainArea.getChild(m.numRows).layoutDirection = "horiz"
+    for each item in arrayKeysText
+        if m._customKeyArea.getChild(numRows).getChildCount() = m._rowButtonsLength
+            m._customKeyArea.createChild("LayoutGroup")
+            numRows++
+            m._customKeyArea.getChild(numRows).layoutDirection = "horiz"
             numButtons = 0
         end if
 
-        m.mainArea.getChild(m.numRows).createChild("Button")
-        m.mainArea.getChild(m.numRows).getChild(numButtons).text = item
+        m._customKeyArea.getChild(numRows).createChild("Button")
+        m._customKeyArea.getChild(numRows).getChild(numButtons).text = item
         numButtons++
     end for
 
-    createdRows = m.mainArea.getChildCount() - 1
+    totalCountRows = m._customKeyArea.getChildCount() - 1
 
-    m.islastRowColumnFull = true
+    m._islastRowColumnFull = true
 
-    if m.mainArea.getChild(createdRows).getChildCount() - 1 < m.rowButtonsLength - 1
-        m.islastRowColumnFull = false
-        m.lastRowColumnCount = m.mainArea.getChild(createdRows).getChildCount() - 1
+    if m._customKeyArea.getChild(totalCountRows).getChildCount() < m._rowButtonsLength
+        m._islastRowColumnFull = false
+        m._lastRowColumnCount = m._customKeyArea.getChild(totalCountRows).getChildCount() - 1
     end if 
 
-    m.top.observeField("focusedChild" , "onFocusedChild")
+    m.top.observeFieldScoped("focusedChild" , "_onFocusedChild")
 end sub
 
-sub onFocusedChild(event)
-    if m.top.hasFocus() then m.mainArea.getChild(0).getChild(0).setFocus(true)
-end sub
-
-sub onActionResponse(keyText)
-    m.timer = CreateObject("roSGNode", "timer")
-    m.timer.duration = 3
-    m.timer.observeFieldScoped("fire" , "onActionEnd")
-
-    m.labelLayout = CreateObject("roSGNode", "LayoutGroup")
-    m.labelLayout.update({
-        translation: [960, 540],
-        horizAlignment: "center",
-        vertAlignment: "center"
-    }, true)
-
-    m.shadowLayout = CreateObject("roSGNode", "LayoutGroup")
-    m.shadowLayout.update({
-        translation: [960, 540],
-        horizAlignment: "center",
-        vertAlignment: "center"
-    }, true)
-
-    m.label = CreateObject("roSGNode", "label")
-    m.label.update({
-        text: keyText,
-        horizAlign: "center",
-        vertAlign: "center"
-    }, true)
-
-    m.shadow = CreateObject("roSGNode", "Rectangle")
-
-    m.shadow.update({
-        color: "0x000000AA",
-        blendingEnabled: "true",
-        width: m.label.boundingRect().width + 25,
-        height: m.label.boundingRect().height + 25
-    },true)
-
-    m.labelLayout.insertChild(m.label, 0)
-    m.shadowLayout.insertChild(m.shadow, 0)
-    m.top.appendChild(m.shadowLayout)
-    m.top.appendChild(m.labelLayout)
-    m.timer.control = "start"
-end sub
-
-sub onActionEnd()
-    m.timer.unObserveFieldScoped("fire")
-    m.top.removeChild(m.timer)
-    m.top.removeChild(m.labelLayout)
-    m.top.removeChild(m.shadowLayout)
-    m.timer = invalid
-    m.labelLayout = invalid
-    m.shadowLayout = invalid
-
-    m.isResponseDialogOpened = false
+sub _onFocusedChild()
+    if m.top.hasFocus() then m._customKeyArea.getChild(0).getChild(0).setFocus(true)
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
     result = false
     if press 
         if key = "options"
-            if m.mainArea.getChild(m.currentRow).getChild(m.currentColumn).hasFocus() = true
-                onActionResponse(m.mainArea.getChild(m.currentRow).getChild(m.currentColumn).text)
+            if m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).hasFocus() = true AND m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).text = "Clear"
+                m._textEditBox.text = ""
+            else if m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).hasFocus() = true AND m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).text = "Space"
+                m._textEditBox.text = m._textEditBox.text + " "
+            else if m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).hasFocus() = true AND m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).text = "Enter"
+                onActionResponse(m._textEditBox.text)
+                m._textEditBox.text = ""
+            else if m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).hasFocus() = true
+                m._textEditBox.text = m._textEditBox.text + m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).text
             end if
+            result = true
         else if key = "right"
-            m.currentColumn++
-            if m.currentColumn = m.rowButtonsLength then m.currentColumn = 0
+            m._currentColumn++
+            if m._currentColumn = m._rowButtonsLength then m._currentColumn = 0
             result = true
         else if key = "left"
-            m.currentColumn--
-            if m.currentColumn = -1 then m.currentColumn = m.rowButtonsLength -1
+            m._currentColumn--
+            if m._currentColumn = -1 then m._currentColumn = m._rowButtonsLength -1
             result = true
         else if key = "up"
-            m.currentRow--
-            if m.currentRow = -1 then m.currentRow = m.mainArea.getChildCount() - 1
+            m._currentRow--
+            if m._currentRow = -1 then m._currentRow = m._customKeyArea.getChildCount() - 1
             result = true
         else if key = "down"
-            m.currentRow++
-            if m.currentRow = m.mainArea.getChildCount() then  m.currentRow = 0
+            m._currentRow++
+            if m._currentRow = m._customKeyArea.getChildCount() then m._currentRow = 0
             result = true
         end if
     end if
     
-    if m.islastRowColumnFull = false AND m.currentRow = m.mainArea.getChildCount() - 1 AND m.currentColumn > m.lastRowColumnCount
-            m.currentColumn = m.lastRowColumnCount
-    end if 
+    if m._islastRowColumnFull = false AND m._currentRow = m._customKeyArea.getChildCount() - 1 AND m._currentColumn > m._lastRowColumnCount then m._currentColumn = m._lastRowColumnCount
 
-    m.mainArea.getChild(m.currentRow).getChild(m.currentColumn).setFocus(true)
+    m._customKeyArea.getChild(m._currentRow).getChild(m._currentColumn).setFocus(true)
 
     return result
 end function

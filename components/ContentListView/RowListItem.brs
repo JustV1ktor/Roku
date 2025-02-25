@@ -1,7 +1,7 @@
 sub init()
-    m.poster = m.top.findNode("itemPoster") 
+    m._poster = m.top.findNode("poster") 
 end sub
 
-sub showContent(event as Object)
-    m.poster.uri = event.getData().FHDPosterUrl
+sub onitemContentPopulate(event as Object)
+    m._poster.uri = event.getData().FHDPosterUrl
 end sub
