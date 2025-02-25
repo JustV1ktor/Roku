@@ -17,6 +17,7 @@ sub _findAndPopulate()
     m._isResponseDialogOpened = false
     m._poster.observeFieldScoped("loadStatus", "_showActionLoader")
     m._rowList.observeFieldScoped("rowItemFocused", "_checkAndPopulateElements")
+    m._rowList.observeFieldScoped("rowItemSelected", "_openVideoPlayer")
 
     m._poster.update({
         width:  (1920 / 2) - 10,
@@ -105,6 +106,11 @@ sub _removeDialog()
     m._rowList.setFocus(true)
     m.top.removeChild(m._dialog)
     m._dialog = invalid
+end sub
+
+sub _openVideoPlayer()
+    m.top.videoUrl = "http://pmd205604tn.download.theplatform.com.edgesuite.net/Demo_Sub_Account_2/772/294/BigBuckBunny.m3u8"
+    m.top.showPlayerScreenViewFromContent = true
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean

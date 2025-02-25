@@ -5,7 +5,7 @@ end sub
 sub _findAndPopulate()
     m._videoPlayer = m.top.findNode("videoPlayer")
     m._buttonGroup = m.top.findNode("buttonGroup")
-    videoContent = CreateObject("roSGNode", "ContentNode")
+    m._videoContent = CreateObject("roSGNode", "ContentNode")
 
     m._duration = m.top.findNode("duration")
     m._position = m.top.findNode("position")
@@ -29,13 +29,17 @@ sub _findAndPopulate()
     m._buttonPauseAndResume.observeFieldScoped("focusedChild", "_buttonPauseAndResumeFocused")
     m._buttonFastForward.observeFieldScoped("focusedChild", "_buttonFastForwardFocused")
     
-    videoContent.title = "Example Video"
-    videoContent.url = "https://roku-webdev-opus.s3.amazonaws.com/public-videos/big+stream+trimmed.mp4"
+    m._videoContent.title = "Example Video"
+    m.top.observeFieldScoped("videoUrl", "_populateVideoUrl")
 
-    m._videoPlayer.content = videoContent
-    m._videoPlayer.control = "play"
+    if m.top.videoUrl = "" or m.top.videoUrl = invalid
+        m._videoContent.url = "https://roku-webdev-opus.s3.amazonaws.com/public-videos/big+stream+trimmed.mp4"
 
-    m._videoPlayer.observeFieldScoped("position", "_showPosition")
+        m._videoPlayer.content = m._videoContent
+        m._videoPlayer.control = "play"
+        
+        m._videoPlayer.observeFieldScoped("position", "_showPosition")
+    end if 
 
     m._currentButton = 0
     m._currentRow = 2
@@ -44,6 +48,15 @@ end sub
 
 sub _onFocusedChild()
     if m.top.hasFocus() then m._buttonGroup.getChild(m._currentButton).setFocus(true)
+end sub
+
+sub _populateVideoUrl()
+    m._videoContent.url = m.top.videoUrl
+
+    m._videoPlayer.content = m._videoContent
+    m._videoPlayer.control = "play"
+
+    m._videoPlayer.observeFieldScoped("position", "_showPosition")
 end sub
 
 sub _onButtonRestartSelected()
@@ -132,13 +145,15 @@ sub _buttonFastForwardFocused()
 end sub
 
 sub _showDuration()
-    seconds = m._videoPlayer.position.toStr().split(".")[0]
-    result = m._videoPlayer.duration - seconds.toInt()
+    secondsPosition = m._videoPlayer.position.toStr().split(".")[0]
+    resultSeconds = m._videoPlayer.duration - secondsPosition.toInt()
+    resultMinutes = (resultSeconds / 60).toStr().split(".")[0]
+    result = resultSeconds - (resultMinutes.toInt() * 60)
     result = result.toStr()
     if result.len() = 1
         result = "0" + result
     end if
-    m._duration.text = "0:" + result
+    m._duration.text = resultMinutes + ":" + result
 end sub
 
 sub _showPosition()
@@ -149,12 +164,38 @@ sub _showPosition()
     end if
     m._progression.width = (1770 * resultPosition) + 30
     m._dot.translation = [(1770 * resultPosition) + 60, 900]
-    seconds = m._videoPlayer.position.toStr().split(".")[0]
-    if seconds.len() = 1
-        seconds = "0" + seconds
+
+    secondsPosition = m._videoPlayer.position.toStr().split(".")[0].toInt()
+    resultMinutes = (secondsPosition / 60).toStr().split(".")[0]
+    resultSeconds = secondsPosition - (resultMinutes.toInt() * 60)
+    resultSeconds = resultSeconds.toStr()
+
+    if resultSeconds.len() = 1
+        resultSeconds = "0" + resultSeconds
     end if
-    m._position.text = "0:" + seconds
     _showDuration()
+    m._position.text = resultMinutes + ":" + resultSeconds
+    
+end sub
+
+sub _dotFastRewindSelected()
+    seconds = m._videoPlayer.position.toStr().split(".")[0]
+    result = seconds.toFloat() - 10.0
+    if result < 0 
+        result = 0
+    end if 
+    m._videoPlayer.seek = result
+    m._videoPlayer.position = result
+end sub
+
+sub _dotFastForwardSelected()
+    seconds = m._videoPlayer.position.toStr().split(".")[0]
+    result = seconds.toFloat() + 10.0
+    if result > m._videoPlayer.duration
+        result = m._videoPlayer.duration
+    end if 
+    m._videoPlayer.seek = result
+    m._videoPlayer.position = result
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
@@ -200,8 +241,13 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
 
             result = true
         else if key = "left"
-            if m._dot.hasFocus() = true 
-                _onButtonFastRewindSelected()
+            if m._dot.hasFocus() = true
+                m._videoPlayer.control = "pause"
+                m._buttonPauseAndResume.uri = "pkg:/images/resume.png" 
+                m._timer = CreateObject("roSGNode", "timer")
+                m._timer.repeat = true
+                m._timer.observeFieldScoped("fire", "_dotFastRewindSelected")
+                m._timer.control = "start"
             else
                 m._currentButton--
                 if m._currentButton = -1 then m._currentButton = 3
@@ -209,12 +255,39 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
             end if
             result = true
         else if key = "right"
-            if m._dot.hasFocus() = true 
-                _onButtonFastForwardSelected()
+            if m._dot.hasFocus() = true
+                m._videoPlayer.control = "pause"
+                m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
+                m._timer = CreateObject("roSGNode", "timer")
+                m._timer.repeat = true
+                m._timer.observeFieldScoped("fire", "_dotFastForwardSelected")
+                m._timer.control = "start"
             else
                 m._currentButton++
                 if m._currentButton = 4 then m._currentButton = 0
                 m._buttonGroup.getChild(m._currentButton).setFocus(true)
+            end if
+            result = true
+        else if key = "replay"
+            _onButtonRestartSelected()
+            result = true
+        else if key = "rewind"
+            _onButtonFastRewindSelected()
+            result = true
+        else if key = "play"
+            _onButtonPauseAndResumeSelected()
+            result = true
+        else if key = "fastforward"
+            _onButtonFastForwardSelected() 
+            result = true
+        else if key = "OK"
+            if m._dot.hasFocus() = true
+                m._videoPlayer.control = "resume"
+                m._buttonPauseAndResume.uri = "pkg:/images/pause.png"
+                if type(m._timer) = "roSGNode"
+                    m._timer.unObserveFieldScoped("fire")
+                    m._timer = invalid
+                end if
             end if
             result = true
         end if

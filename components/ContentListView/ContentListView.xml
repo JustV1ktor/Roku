@@ -1,6 +1,8 @@
 <component name="ContentListView" extends = "Group">
     <interface>
         <field id="isLoading" type="boolean" />
+        <field id="showPlayerScreenViewFromContent" type="boolean" />
+        <field id="videoUrl" type="string" />
     </interface>
     
     <children>

@@ -43,12 +43,25 @@ end sub
 
 sub _showContentListView()
     m._homeView.showContentListView = false
-    contentListView = CreateObject("roSGNode", "ContentListView")
+    m._contentListView = CreateObject("roSGNode", "ContentListView")
 
-    contentListView.observeFieldScoped("isLoading", "_showActionLoader")
+    m._contentListView.observeFieldScoped("isLoading", "_showActionLoader")
+    m._contentListView.observeFieldScoped("showPlayerScreenViewFromContent", "_showShowPlayerScreenViewFromContent")
 
     m.top.ComponentController.callFunc("show", {
-        view: contentListView
+        view: m._contentListView
+    })
+end sub
+
+sub _showShowPlayerScreenViewFromContent()
+    m._contentListView.showPlayerScreenViewFromContent = false
+    playerScreenView = CreateObject("roSGNode", "PlayerScreenView")
+    
+    playerScreenView.videoUrl = m._contentListView.videoUrl
+    playerScreenView.observeFieldScoped("isLoading", "_showActionLoader")
+
+    m.top.ComponentController.callFunc("show", {
+        view: playerScreenView
     })
 end sub
 
