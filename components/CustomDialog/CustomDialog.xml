@@ -8,11 +8,11 @@
 
     <children>
         <Rectangle
-        id = "backGroundOpacity"
-        color = "0x00000066"
-        width = "1920"
-        height = "1080"
-        blendingEnabled = "true"/>
+            id = "backGroundOpacity"
+            color = "0x00000066"
+            width = "1920"
+            height = "1080"
+            blendingEnabled = "true"/>
 
         <LayoutGroup
             horizAlignment = "center"

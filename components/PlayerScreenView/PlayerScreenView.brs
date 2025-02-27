@@ -7,6 +7,8 @@ sub _findAndPopulate()
     m._buttonGroup = m.top.findNode("buttonGroup")
     m._videoContent = CreateObject("roSGNode", "ContentNode")
 
+    m._videoPlayer.seekMode = "accurate"
+
     m._duration = m.top.findNode("duration")
     m._position = m.top.findNode("position")
     m._progressBar = m.top.findNode("progressBar")
@@ -38,7 +40,7 @@ sub _findAndPopulate()
         m._videoPlayer.content = m._videoContent
         m._videoPlayer.control = "play"
         
-        m._videoPlayer.observeFieldScoped("position", "_showPosition")
+        m._videoPlayer.observeFieldScoped("position", "_updatePosition")
     end if 
 
     m._currentButton = 0
@@ -56,7 +58,7 @@ sub _populateVideoUrl()
     m._videoPlayer.content = m._videoContent
     m._videoPlayer.control = "play"
 
-    m._videoPlayer.observeFieldScoped("position", "_showPosition")
+    m._videoPlayer.observeFieldScoped("position", "_updatePosition")
 end sub
 
 sub _onButtonRestartSelected()
@@ -67,18 +69,39 @@ sub _onButtonRestartSelected()
 end sub
 
 sub _onButtonFastRewindSelected()
+    if type(m._timer) = "roSGNode"
+        m._timer.unObserveFieldScoped("fire")
+        m._timer = invalid
+    else
+        m._videoPlayer.control = "pause"
+        m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
+        m._timer = CreateObject("roSGNode", "timer")
+        m._timer.repeat = true
+        m._timer.observeFieldScoped("fire", "_repeatFastRewind")
+        m._timer.control = "start"
+    end if
+end sub
+
+sub _repeatFastRewind()
     seconds = m._videoPlayer.position.toStr().split(".")[0]
-    result = seconds.toFloat() - 5.0
+    result = seconds.toFloat() - 10.0
     if result < 0 
         result = 0
+        m._timer.unObserveFieldScoped("fire")
+        m._timer = invalid
+        m._buttonPauseAndResume.uri = "pkg:/images/pause.png"
+        m._videoPlayer.control = "resume"
     end if 
     m._videoPlayer.seek = result
     m._videoPlayer.position = result
     m._videoPlayer.control = "pause"
-    m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
 end sub
 
 sub _onButtonPauseAndResumeSelected()
+    if type(m._timer) = "roSGNode"
+        m._timer.unObserveFieldScoped("fire")
+        m._timer = invalid
+    end if
     if m._videoPlayer.control = "resume" or m._videoPlayer.control = "play"
         m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
         m._videoPlayer.control = "pause"
@@ -89,15 +112,30 @@ sub _onButtonPauseAndResumeSelected()
 end sub
 
 sub _onButtonFastForwardSelected()
+    if type(m._timer) = "roSGNode"
+        m._timer.unObserveFieldScoped("fire")
+        m._timer = invalid
+    else
+        m._videoPlayer.control = "pause"
+        m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
+        m._timer = CreateObject("roSGNode", "timer")
+        m._timer.repeat = true
+        m._timer.observeFieldScoped("fire", "_repeatFastForward")
+        m._timer.control = "start"
+    end if
+end sub
+
+sub _repeatFastForward()
     seconds = m._videoPlayer.position.toStr().split(".")[0]
-    result = seconds.toFloat() + 5.0
-    if result > m._videoPlayer.duration
+    result = seconds.toFloat() + 10.0
+    if result >= m._videoPlayer.duration
         result = m._videoPlayer.duration
+        m._timer.unObserveFieldScoped("fire")
+        m._timer = invalid
     end if 
     m._videoPlayer.seek = result
     m._videoPlayer.position = result
     m._videoPlayer.control = "pause"
-    m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
 end sub
 
 sub _buttonRestartFocused()
@@ -144,7 +182,7 @@ sub _buttonFastForwardFocused()
     end if
 end sub
 
-sub _showDuration()
+sub _updateDuration()
     secondsPosition = m._videoPlayer.position.toStr().split(".")[0]
     resultSeconds = m._videoPlayer.duration - secondsPosition.toInt()
     resultMinutes = (resultSeconds / 60).toStr().split(".")[0]
@@ -156,7 +194,7 @@ sub _showDuration()
     m._duration.text = resultMinutes + ":" + result
 end sub
 
-sub _showPosition()
+sub _updatePosition()
     if m._videoPlayer.position / m._videoPlayer.duration > 1 
         resultPosition = 1
     else
@@ -173,29 +211,54 @@ sub _showPosition()
     if resultSeconds.len() = 1
         resultSeconds = "0" + resultSeconds
     end if
-    _showDuration()
+    _updateDuration()
     m._position.text = resultMinutes + ":" + resultSeconds
     
 end sub
 
 sub _dotFastRewindSelected()
     seconds = m._videoPlayer.position.toStr().split(".")[0]
-    result = seconds.toFloat() - 10.0
+    result = seconds.toFloat() - 5.0
     if result < 0 
         result = 0
     end if 
     m._videoPlayer.seek = result
     m._videoPlayer.position = result
+    m._videoPlayer.control = "pause"
+    m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
 end sub
 
 sub _dotFastForwardSelected()
     seconds = m._videoPlayer.position.toStr().split(".")[0]
-    result = seconds.toFloat() + 10.0
+    result = seconds.toFloat() + 5.0
     if result > m._videoPlayer.duration
         result = m._videoPlayer.duration
     end if 
     m._videoPlayer.seek = result
     m._videoPlayer.position = result
+    m._videoPlayer.control = "pause"
+    m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
+end sub
+
+sub _showControlElements() 
+    m._progressBar.visible = "true"
+    m._progression.visible = "true"
+    m._dot.visible = "true"
+    m._buttonGroup.visible = "true"
+    m._backGroundGradient.visible = "true"
+    m._position.visible = "true"
+    m._duration.visible = "true"
+end sub
+
+sub _hideControlElements() 
+    m._duration.setFocus(true)
+    m._progressBar.visible = "false"
+    m._progression.visible = "false"
+    m._dot.visible = "false"
+    m._buttonGroup.visible = "false"
+    m._backGroundGradient.visible = "false"
+    m._position.visible = "false"
+    m._duration.visible = "false"
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
@@ -207,14 +270,8 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
             if m._currentRow < 0 then m._currentRow = 0
 
             if m._currentRow = 0
-                m._duration.setFocus(true)
-                m._progressBar.visible = "false"
-                m._progression.visible = "false"
-                m._dot.visible = "false"
-                m._buttonGroup.visible = "false"
-                m._backGroundGradient.visible = "false"
-                m._position.visible = "false"
-                m._duration.visible = "false"
+                m._dot.color = "0xffffffff"
+                _hideControlElements()
             else if m._currentRow = 1
                 m._dot.setFocus(true)
                 m._dot.color = "0xff00ffff"
@@ -227,13 +284,8 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
 
             if m._currentRow = 1
                 m._dot.setFocus(true)
-                m._progressBar.visible = "true"
-                m._progression.visible = "true"
-                m._dot.visible = "true"
-                m._buttonGroup.visible = "true"
-                m._backGroundGradient.visible = "true"
-                m._position.visible = "true"
-                m._duration.visible = "true"
+                m._dot.color = "0xff00ffff"
+                _showControlElements()
             else if m._currentRow = 2
                 m._buttonGroup.getChild(m._currentButton).setFocus(true)
                 m._dot.color = "0xffffffff"
@@ -242,52 +294,53 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
             result = true
         else if key = "left"
             if m._dot.hasFocus() = true
-                m._videoPlayer.control = "pause"
-                m._buttonPauseAndResume.uri = "pkg:/images/resume.png" 
-                m._timer = CreateObject("roSGNode", "timer")
-                m._timer.repeat = true
-                m._timer.observeFieldScoped("fire", "_dotFastRewindSelected")
-                m._timer.control = "start"
+                _dotFastRewindSelected()
             else
                 m._currentButton--
-                if m._currentButton = -1 then m._currentButton = 3
+                if m._currentButton = -1 then m._currentButton = 0
                 m._buttonGroup.getChild(m._currentButton).setFocus(true)
             end if
             result = true
         else if key = "right"
             if m._dot.hasFocus() = true
-                m._videoPlayer.control = "pause"
-                m._buttonPauseAndResume.uri = "pkg:/images/resume.png"
-                m._timer = CreateObject("roSGNode", "timer")
-                m._timer.repeat = true
-                m._timer.observeFieldScoped("fire", "_dotFastForwardSelected")
-                m._timer.control = "start"
+                _dotFastForwardSelected()
             else
                 m._currentButton++
-                if m._currentButton = 4 then m._currentButton = 0
+                if m._currentButton = 4 then m._currentButton = 3
                 m._buttonGroup.getChild(m._currentButton).setFocus(true)
             end if
             result = true
         else if key = "replay"
+            m._currentRow = 2
+            m._currentButton = 0
+            m._buttonRestart.setFocus(true)
             _onButtonRestartSelected()
+            _showControlElements()
             result = true
         else if key = "rewind"
+            m._currentRow = 2
+            m._currentButton = 1
+            m._buttonFastRewind.setFocus(true)
             _onButtonFastRewindSelected()
+            _showControlElements()
             result = true
         else if key = "play"
+            m._currentRow = 2
+            m._currentButton = 2
+            m._buttonPauseAndResume.setFocus(true)
             _onButtonPauseAndResumeSelected()
+            _showControlElements()
             result = true
         else if key = "fastforward"
-            _onButtonFastForwardSelected() 
+            m._currentRow = 2
+            m._currentButton = 3
+            m._buttonFastForward.setFocus(true)
+            _onButtonFastForwardSelected()
+            _showControlElements()
             result = true
         else if key = "OK"
             if m._dot.hasFocus() = true
-                m._videoPlayer.control = "resume"
-                m._buttonPauseAndResume.uri = "pkg:/images/pause.png"
-                if type(m._timer) = "roSGNode"
-                    m._timer.unObserveFieldScoped("fire")
-                    m._timer = invalid
-                end if
+                _onButtonPauseAndResumeSelected()
             end if
             result = true
         end if

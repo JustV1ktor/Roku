@@ -16,32 +16,32 @@
                 layoutDirection = "horiz"
                 itemSpacings = "[10]">
                     <Poster
-                    id = "poster"
-                    loadDisplayMode = "scaleToFit"
-                    loadWidth = "950"
-                    loadHeight = "530"/>
+                        id = "poster"
+                        loadDisplayMode = "scaleToFit"
+                        loadWidth = "950"
+                        loadHeight = "530"/>
                     <LayoutGroup
                         layoutDirection = "vert"
                         itemSpacings = "[20]">
                         <Label
-                        id = "title"
-                        maxLines = "2"
-                        wrap = "true"
-                        font = "font:LargeSystemFont"/>
+                            id = "title"
+                            maxLines = "2"
+                            wrap = "true"
+                            font = "font:LargeSystemFont"/>
                         <Rectangle
                             id = "devider"
                             color = "0xffffffff"
                             height = "2"/>
                         <Label
-                        id = "description"
-                        wrap = "true"/>
+                            id = "description"
+                            wrap = "true"/>
                             <layoutGroup
                                 layoutDirection = "horiz"
                                 itemSpacings = "[20]">
                                 <Label
-                                id = "averageRating"/>
+                                    id = "averageRating"/>
                                 <Label
-                                id = "releaseDate"/>
+                                    id = "releaseDate"/>
                             </layoutGroup>
                     </LayoutGroup>
             </LayoutGroup>

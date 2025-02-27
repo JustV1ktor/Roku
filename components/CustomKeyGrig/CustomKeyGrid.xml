@@ -11,6 +11,20 @@
                 horizAlignment = "center"
                 layoutDirection = "vert">
             </LayoutGroup>
+            <LayoutGroup
+                id = "controlKeyArea"
+                horizAlignment = "center"
+                layoutDirection = "vert">
+                <Button
+                    id = "buttonClear"
+                    text = "clear"/>
+                <Button
+                    id = "buttonSpace"
+                    text = "space"/>
+                <Button
+                    id = "buttonEnter"
+                    text = "enter"/>
+            </LayoutGroup>
         </LayoutGroup>  
     </children>
 
